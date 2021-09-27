@@ -1,0 +1,305 @@
+//Author : Krishan Kant Agnihotri
+#include <bits/stdc++.h>
+using namespace std;
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
+
+//ordered_set
+template <class T>
+using oset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+#define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
+
+//find_by_order(k)  returns iterator to kth element starting from 0;
+//order_of_key(k) returns count of elements strictly smaller than k;
+//erase,insert same as normal set
+//define it as oset<int> s; or oset<pair<int,int>> s;
+
+//bunch of pragmas
+#pragma GCC optimize("O3")
+#pragma GCC optimize("Ofast,unroll-loops,no-stack-protector,fast-math")
+#pragma comment(linker, "/stack:200000000")
+#pragma GCC target("sse,sse2,sse3,sse4,popcnt,abm,mmx,tune=native")
+
+//#pragma Gcc target("avx2,fma,avx")
+//(Uncomment when needed and be sure it not give TLE bcoz it requires time)
+//#pragma GCC optimize "trapv"//to check integer overflow and gives RE.
+
+//macros
+#define ull unsigned long long int
+#define ll long long
+#define ii pair<int, int>
+#define vii vector<ii>
+#define vi vector<int>
+#define vl vector<ll>
+#define mii map<int, int>
+#define uii unordered_map<int, int>
+#define all(x) x.begin(), x.end()
+#define ff first
+#define fr(i, a, b) for (int i = a; i <= b; i++)
+#define ss second
+#define fast_io                       \
+    ios_base::sync_with_stdio(false); \
+    cin.tie(NULL);                    \
+    cout.tie(NULL);
+#define endl "\n"
+#define pb push_back
+#define INF 1e18
+#define lcm(a, b) a *b / __gcd(a, b)
+#define print(x) cout << x << "\n";
+#define scanv(v, n)             \
+    for (int i = 0; i < n; i++) \
+        cin >> v[i];
+#define printv(v)     \
+    for (auto it : v) \
+        cout << it << " ";
+#define rall(v) v.rbegin(), v.rend()
+#define GOOGLE(i) cout << "Case" \
+                       << " #" << i << ": ";
+#define Time cerr << "\nTime Taken : " << (float)(clock() - time_p) / CLOCKS_PER_SEC << "\n";
+clock_t time_p = clock();
+
+//boost for big int
+//#include<boost/multiprecision/cpp_int.hpp>
+//uncoment for large int requirement
+//using boost::multiprecision::cpp_int;
+
+//forced_functions
+void file_io()
+{
+    fast_io
+#ifndef ONLINE_JUDGE
+        freopen("inputa.txt", "r", stdin);
+    freopen("outputa.txt", "w", stdout);
+    freopen("log.txt", "w", stderr);
+#endif
+}
+
+//safe_hash
+struct custom_hash
+{
+    static uint64_t splitmix64(uint64_t x)
+    {
+        // http://xorshift.di.unimi.it/splitmix64.c
+        x += 0x9e3779b97f4a7c15;
+        x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
+        x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
+        return x ^ (x >> 31);
+    }
+
+    size_t operator()(uint64_t x) const
+    {
+        static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
+        return splitmix64(x + FIXED_RANDOM);
+    }
+};
+//use it with unordered_map<T,T,custom_hash> safe_map
+
+//const
+const long long int MOD = 1e9 + 7;
+const long long int MOD2 = (119 << 23) + 1; //(119<<23)+1==998244353
+//random
+ll stoii(string s)
+{
+    ll ans = 0;
+    for (auto it : s)
+    {
+        ll cur = it - '0';
+        ans = ans * 10 + cur;
+    }
+    return ans;
+}
+
+//matrix stuff
+int dx[] = {-1, 0, 1, 0};
+int dy[] = {0, 1, 0, -1};
+//create obj as LCA obj(adj);
+//call function as obj.kth(a,b);
+class LCA
+{
+public:
+#define int long long
+    vector<vector<int>> g, parent;
+    vector<int> depth;
+    int n;
+    int LG;
+    LCA(vector<vector<int>> g, int root = 1)
+    {
+        this->g = g;
+        this->n = g.size();
+        this->LG = log2(n) + 1;
+        this->depth = vector<int>(n);
+        this->parent = vector<vector<int>>(n, vector<int>(LG));
+        dfs(root);
+        compute();
+    }
+    void dfs(int u, int p = 0)
+    {
+        parent[u][0] = p;
+        for (auto v : g[u])
+        {
+            if (v != p)
+            {
+                depth[v] = depth[u] + 1;
+                dfs(v, u);
+            }
+        }
+    }
+    void compute()
+    {
+        for (int j = 1; j < LG; ++j)
+        {
+            for (int i = 1; i < n; ++i)
+            {
+                if (parent[i][j - 1])
+                {
+                    parent[i][j] = parent[parent[i][j - 1]][j - 1];
+                }
+            }
+        }
+    }
+
+    int kth(int u, int d)
+    {
+        for (int j = LG - 1; j >= 0; j--)
+        {
+            if ((1ll << j) <= d)
+            {
+                u = parent[u][j];
+                d -= (1ll << j);
+            }
+        }
+        return u;
+    }
+
+    int lca(int u, int v)
+    {
+        if (depth[v] > depth[u])
+            swap(u, v);
+        for (int j = LG - 1; j >= 0; --j)
+        {
+            if (depth[u] - depth[v] >= (1 << j))
+            {
+                u = parent[u][j];
+            }
+        }
+        if (u == v)
+            return u;
+        for (int j = LG - 1; j >= 0; --j)
+        {
+            if (parent[u][j] != parent[v][j])
+            {
+                u = parent[u][j];
+                v = parent[v][j];
+            }
+        }
+        return parent[u][0];
+    }
+    int dist(int u, int v)
+    {
+        return depth[u] + depth[v] - 2 * depth[lca(u, v)];
+    }
+#undef int
+};
+const ll N = 1e5 + 1;
+const ll M = 2e5 + 2;
+vector<int> adj[N];
+ll st[N];
+ll e[N];
+ll timer = 0;
+ll a[M];
+ll par[N];
+ll lvl[N];
+void dfs(ll u, ll v = -1, ll lv = 0)
+{
+    st[u] = timer++;
+    par[u] = v;
+    lvl[u] = lv + 1;
+    for (auto child : adj[u])
+    {
+        if (child == v)
+            continue;
+        dfs(child, u, lv + 1);
+    }
+    e[u] = timer - 1;
+}
+void go(ll u, ll v, ll w)
+{
+    if (lvl[v] < lvl[u])
+        swap(u, v);
+    while (lvl[u] != lvl[v])
+    {
+        a[v] ^= w;
+        v = par[v];
+    }
+    // cout<<u<<" "<<v<<endl;
+    while (u != v)
+    {
+        a[u] ^= w;
+        a[v] ^= w;
+        v = par[v];
+        u = par[u];
+    }
+
+    // cout<<u<<" "<<v<<endl;
+    if (u == v)
+    {
+        a[v] ^= w;
+        return;
+    }
+}
+bool test = true;
+bool file = true;
+void solve()
+{
+    ll n, q;
+    cin >> n >> q;
+    for (int i = 1; i <= n; i++)
+    {
+        par[i] = -1;
+        a[i] = 0;
+        lvl[i] = 0;
+    }
+    ll m = n - 1;
+    while (m--)
+    {
+        ll u, v;
+        cin >> u >> v;
+        adj[u].pb(v);
+        adj[v].pb(u);
+    }
+    dfs(1);
+    while (q--)
+    {
+        ll u, v;
+        cin >> u >> v;
+        ll w;
+        cin >> w;
+        go(u, v, w);
+    }
+    ll ans = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        ans += a[i];
+    }
+    cout << ans << endl;
+    for (int i = 0; i <= n; i++)
+    {
+        adj[i].clear();
+    }
+    timer = 0;
+}
+int main()
+{
+    if (file)
+        file_io();
+    int t;
+    t = 1;
+    if (test)
+        cin >> t;
+    while (t--)
+    {
+        solve();
+    }
+    Time
+}
