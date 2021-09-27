@@ -103,7 +103,36 @@ int dy[]={0,1,0,-1};
 bool test = true;
 bool file = true;
 void solve(){
-
+  
+    ll a,b;
+    cin>>a>>b;
+    ll s = b;
+    bool ok =false;
+    if(a == 1){
+        cout<<"YES\n";
+        continue;
+    }
+    if(__gcd(a,b) == 1){
+        cout<<"NO\n";
+        continue;
+    }
+   while(1){
+       ll g = __gcd(a,b);
+       if(a == 1){
+           ok = true;
+           break;
+       }
+       if(g == 1){
+           break;
+       }
+       a/=g;
+   }
+   if(ok){
+    cout<<"YES\n";
+   }
+   else{
+    cout<<"NO\n";
+   }
 }
 int main(){
     if(file)
