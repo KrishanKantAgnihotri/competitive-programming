@@ -99,53 +99,46 @@ ll stoii(string s){
 //matrix stuff
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
-
+const ll N = 3e5+2;
+vector<ll> adj[N];
+bool vis[N];
+ll sbs[N];
+ll dfs(ll u,ll v=-1){
+    int cnt = 0 ; 
+   vis[u]  = true;
+    if(adj[u].size() == 1 && v!=-1){
+        return 1;
+    }
+    for(auto child: adj[u]){
+        if(child==v) continue;
+        cnt+=dfs(child,u);
+    }
+    
+    return cnt ;
+}
 bool test = false;
 bool file = true;
-const ll N = 1e3+2;
-set<int> adj[N];
-bool vis[N];
-bool dfs(ll u,ll v =-1){
-    vis[u] = true;
-    bool ok = false;
-    for(auto child:adj[u]){
-        if(child == v) continue;
-        if(vis[child]){
-            return true;
-        }
-        ok|=dfs(child,u);
-    }
-    return ok;
-}
 void solve(){
-    ll n,m;
-    cin>>n>>m;
-
-    for(int i =1 ;i<=n ;i++){
+    ll n;
+    cin>>n;
+    ll m = n-1 ; 
+    for(int i = 1;i<=n ;i++){
+        sbs[i] = 0 ; 
         vis[i] = false;
     }
-
     while(m--){
         ll u,v;
         cin>>u>>v;
-        adj[u].insert(v);
-        adj[v].insert(u);
+        adj[u].pb(v);
+        adj[v].pb(u);
+    
     }
-   
-    bool check = false;
-    for(int i =1 ;i<=n ;i++){
-        if(vis[i]) continue;
-        check|=dfs(i);
-        if(check) break;
-    }
-    if(!check){
-        cout<<"NO\n";
-    }
-    else{
-        cout<<"YES\n";
-    }
-
-   
+    ll ans = 0 ; 
+    for(int i = 1 ;i<=n ;i++){
+       if(!vis[i])
+       ans+=(dfs(i)-1);
+}
+    cout<<ans<<endl;
 
 }
 int main(){

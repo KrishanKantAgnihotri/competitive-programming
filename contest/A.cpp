@@ -6,15 +6,15 @@ using namespace std;
 using namespace __gnu_pbds;
 
 //ordered_set
-template<class T> using oset =tree<T, null_type, less<T>, rb_tree_tag,tree_order_statistics_node_update> ;
-#define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
+// template<class T> using oset =tree<T, null_type, less<T>, rb_tree_tag,tree_order_statistics_node_update> ;
+// #define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
 
 //find_by_order(k)  returns iterator to kth element starting from 0;
 //order_of_key(k) returns count of elements strictly smaller than k;
 //erase,insert same as normal set
 //define it as oset<int> s; or oset<pair<int,int>> s;
 
-//bunch of pragmas
+// //bunch of pragmas
 #pragma GCC optimize("O3")
 #pragma GCC optimize("Ofast,unroll-loops,no-stack-protector,fast-math")
 #pragma comment(linker, "/stack:200000000")
@@ -99,40 +99,64 @@ ll stoii(string s){
 //matrix stuff
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
-
-bool test = true;
+const ll N = 1e3+2;
+ll par[N];
+ll sz[N];
+ll mn[N];
+ll fnd(ll a){
+    if(par[a]==a)
+        return par[a];
+    return par[a] = fnd(par[a]);
+}
+void merge(ll a,ll b){
+    a = fnd(a);
+    b = fnd(b);
+    if(a == b){
+return;
+    }
+if(sz[par[a]]>sz[par[b]])
+    swap(a,b);
+mn[par[b]] = min(mn[par[a]],mn[par[b]]);
+sz[par[b]]+=sz[par[a]];
+par[a]=par[b];
+}
+bool test = false;
 bool file = true;
 void solve(){
-  
-    ll a,b;
-    cin>>a>>b;
-    ll s = b;
-    bool ok =false;
-    if(a == 1){
-        cout<<"YES\n";
-        continue;
+    ll n;
+    cin>>n;
+    ll m;
+    cin>>m;
+    vl w(n+1);
+    for(int i = 1 ;i<=n ;i++){
+        cin>>w[i];
+        par[i] = i; 
+        sz[i] = 1;
+        mn[i] = w[i];
     }
-    if(__gcd(a,b) == 1){
-        cout<<"NO\n";
-        continue;
+    vector<pair<ll,pair<ll,ll>>> e;
+    while(m--){
+        ll u,v;
+        cin>>u>>v; 
+
+        merge(u,v);
+        
     }
-   while(1){
-       ll g = __gcd(a,b);
-       if(a == 1){
-           ok = true;
-           break;
-       }
-       if(g == 1){
-           break;
-       }
-       a/=g;
-   }
-   if(ok){
-    cout<<"YES\n";
-   }
-   else{
-    cout<<"NO\n";
-   }
+    ll ans = 0 ; 
+    // for(int i = 1 ;i<=n ;i++) cout<<par[i]<<" "<<mn[par[i]]<<endl;
+    for(int i = 1 ;i<=n; i++){
+        for(int j = i+1 ;j<=n ;j++){
+            if(fnd(i) != fnd(j)){
+                i = fnd(i);
+                j = fnd(j);
+                // cout<<i<<" "<<j<<endl;
+                ans+=(mn[par[i]]+mn[par[j]]);
+                merge(i,j);
+            }
+        }
+    }
+
+    cout<<ans<<endl;
 }
 int main(){
     if(file)
