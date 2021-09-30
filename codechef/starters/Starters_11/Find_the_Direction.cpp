@@ -118,68 +118,26 @@ bool test = true;
 bool file = true;
 void solve()
 {
-    ll n, k;
-    cin >> n;
-    cin >> k;
-    vl v(n);
-    scanv(v, n);
-    ll preff[n+1]={0};
-    ll suff[n+1]={0};
-    bool ok = false;
-    for(int i = 0 ; i<n ;i++) if(v[i]==0) ok = true;
-    ll sm = accumulate(all(v),0);
-    if(!ok){
-        sm+=(2*n*k);
-        cout<<sm<<endl;
-        return;
+    ll x;
+    cin >> x;
+    x %= 4;
+    if (x == 0)
+    {
+        cout << "North\n";
     }
-    if(k == 0){
-        cout<<sm<<endl;
-        return ;
+    else if (x == 1)
+    {
+        cout << "East\n";
     }
-    if(sm ==0){
-        cout<<sm<<endl;
-        return ;
+    else if (x == 2)
+    {
+        cout << "South\n";
     }
-    ll cnt = 0 ; 
-    for(int i = 0 ; i<n ;i++){
-        if(v[i]>0) cnt = 0 ; 
-        else 
-            cnt++;
-        preff[i]=cnt;
+    else
+    {
+        cout << "West\n";
     }
-     cnt = 0 ; 
-    for(int i = n-1 ;i>=0 ; i--){
-        if(v[i]>0) cnt = 0 ; 
-        else 
-            cnt++;
-        suff[i] = cnt;
-    }
-    ll i = 0 ; 
-    while(v[i] == 0){
-        preff[i]+=preff[n-1];
-        i++;
-    }
-    i = n-1 ; 
-    while(v[i] == 0){
-        suff[i]+=suff[0];
-        i--;
-    }
-    ll ans = 0 ; 
-    for(int i= 0 ; i<n ;i++){
-        ll mn = min(preff[i],suff[i]);
-        if(mn == 0){
-            ans+=(v[i]+2*k);
-        }
-        else{
-            if(mn<k){
-                ans+=(2*(k-mn));
-            }
-        }
-    }
-    cout<<ans<<endl;
 }
- 
 int main()
 {
     if (file)
