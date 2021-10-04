@@ -100,63 +100,27 @@ ll stoii(string s){
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
 
-bool test = false;
+bool test = true;
 bool file = true;
-//BIT with 1 based indexing
-//point update and range query
-template<typename T>
-struct BIT{
-
-    T N ;
-    vector<T> tree;
-    void init(int n){
-        N = n;
-        tree.assign(n+1,0);
+void solve(){
+    ll n;
+    cin>>n;
+    vector<pair<ll,ll>> v(n),v2(n);
+    for(int i = 0 ;i<n ;i++){
+        cin>>v[i].ff;
+        v[i].ss = i+1 ;
     }
-    void update(int idx,T val){
-
-        while(idx<=N){
-            tree[idx-1]+=val;
-            idx+=(idx&(-idx));
-        }
+    for(int j = 0 ;j<n ;j++){
+        cin>>v2[j].ff;
+        v2[j].ss = j+1;
     }
-    T query(int idx){
-        T sm = 0 ; 
-        while(idx>0){
-            sm+=tree[idx-1];
-            idx-=(idx&(-idx));
-        }
-        return sm;
+    ll ans = 0 ; 
+    sort(all(v));
+    sort(all(v2));
+    for(int i = 0 ; i<n;i++){
+        ans+=(v[i].first*(v2[i].second-v[i].second));
     }
-    T sum(int l,int r){
-        return query(r) - query(l-1);
-    }
-};
-
-void solve(){   
-   ll n;
-   cin>>n;
-   vector<pair<ll,ll>> m;
-   vector<ll> s(n),e(n);
-   // set<ll> s;
-   for(int i = 0 ; i<n ;i++){
-    cin>>s[i]>>e[i];
-    e[i] = s[i]+e[i];
-    m.push_back({s[i],1});
-    m.push_back({e[i],-1});
-   }
-   sort(all(m));
-   map<ll,ll> ans;
-   ll pre = 0 ;
-   int last = 0; 
-   for(int i = 0 ; i<m.size()-1 ; i++){
-    pre+=m[i].second;
-    // cout<<pre<<" "<<(it.first)<<endl;
-    ans[pre]+= (m[i+1].first-m[i].first);
-   }
-   for(int i = 1 ; i<=n ;i++){
-    cout<<ans[i]<<" ";
-   }
+    cout<<ans<<endl;
 }
 int main(){
     if(file)
