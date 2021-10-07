@@ -102,55 +102,22 @@ int dy[]={0,1,0,-1};
 
 bool test = true;
 bool file = true;
-vector<int> primes;
-const ll N = 300;
-bool isprime[N];
-map<int,bool> m;
-void pre(){
-    memset(isprime,false,sizeof(isprime));
-    isprime[0]=isprime[1] = true;
-    for(int i = 2 ;i*i<=N ;i++){
-        if(!isprime[i])
-        for(int j = 2*i ;j<N ;j+=i){
-            isprime[j] = true; 
-        }
-    }
-    for(int i = 2 ;i<N ;i++){
-        if(!isprime[i])
-            primes.pb(i);
-    }
-    vector<int> semiprimes;
-    for(auto prime : primes){
-        for(auto prime2 :primes){
-          if( prime == prime2)  continue;
-          if(prime*prime2<=200)
-          semiprimes.pb(prime*prime2);
-        }
-    }
-    for(auto sem : semiprimes){
-        for(auto sem2 : semiprimes){
-            if(!m.count(sem+sem2))
-                m[sem+sem2] = true;
-        }
-    }
-
-}
 void solve(){
-
-    ll n;
-    cin>>n;
-    if(m.count(n)){
-        cout<<"YES"<<"\n";
+   ll n,k;
+    cin>>n>>k;
+    vl v(n);
+    scanv(v,n);
+    sort(rall(v));
+    ll ele = v[k-1];    
+    ll cnt = 0 ; 
+    for(int i = 0 ; i<n ;i++){
+        if(v[i]>=ele) cnt++;
     }
-    else{
-        cout<<"NO"<<"\n";
-    }
-
+    cout<<cnt<<endl;
 }
 int main(){
     if(file)
       file_io();
-  pre();
     int t ;
     t = 1 ;
     if(test)
