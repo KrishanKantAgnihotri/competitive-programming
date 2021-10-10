@@ -100,42 +100,9 @@ ll stoii(string s){
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
 
-bool test = true;
+bool test = false;
 bool file = true;
 void solve(){
-    ll n,m,k;
-    cin>>n>>m>>k;
-    char s[n+1][m+1];
-    for(int i = 0 ; i<n ;i++){
-        for(int j = 0 ;j<m ;j++){
-            cin>>s[i][j];
-        }
-    }
-    for(int i = 0 ; i<n ;i++){
-        for(int j = 0 ;j<m ;j++){
-            int d = 0 ;
-            if(s[i][j] =='.'){
-                continue;
-            }
-            while(i-d>0 && j-d>0 && j+d<m-1 && s[i-d-1][j-d-1]!='.' && s[i-d-1][j+d+1]!='.' ) 
-                d++;
-            if(d>=k){
-                for(int l = 0   ; l<=d ;l++){
-                    s[i-l][j-l]='$';
-                    s[i-l][j+l]='$';
-                }
-            }               
-        }
-    }
-    for(int i = 0 ;i < n ;i++){
-        for(int j = 0 ;j<m ;j++){
-            if(s[i][j]=='*'){
-                cout<<"NO\n";
-                return ;
-            }
-        }
-    }
-    cout<<"YES\n";
 
 }
 int main(){

@@ -99,47 +99,10 @@ ll stoii(string s){
 //matrix stuff
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
-ll shift(ll v[],ll k){
-    ll mn =-INF;
-    ll id = -1 ; 
-    for(int i = 0 ; i<=k ;i++){
-        if(mn<v[i]){
-            mn = v[i];
-            id = i; 
-        }
-    }
-    ll d = (id+1)%(k+1);
-    vl v2(k+1);
-    for(int i = 0 ; i<=k ;i++){
-        v2[(i-d+k+1)%(k+1)] = v[i];
-    }
-    for(int i = 0 ; i<=k ;i++){
-        v[i] = v2[i];
-    }
-    return id;
-}
-bool test = true;
+
+bool test = false;
 bool file = true;
 void solve(){
-    ll n;
-    cin>>n;
-    ll v[n];
-    for(int i = 0 ; i<n; i++) cin>>v[i];
-        vector<pair<ll,pair<ll,ll>>> ans;
-    for(int i = n-1 ; i>=1 ;i--){
-        ll id =  shift(v,i);
-        ll d = (id+1)%(i+1);
-        if(d ==0)  continue;
-        ans.pb({1,{i+1,d}});
-    }
-    // for(int i = 0 ; i<n ;i++){
-    //     cout<<v[i]<<" ";
-    // }
-    // cout<<endl;
-    cout<<ans.size()<<endl;
-    for(auto it : ans){
-        cout<<it.ff<<" "<<it.ss.ff<<" "<<it.ss.ss<<endl;
-    }
 
 }
 int main(){

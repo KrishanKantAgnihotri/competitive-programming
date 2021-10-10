@@ -1,165 +1,80 @@
-//Author : Krishan Kant Agnihotri        
 #include<bits/stdc++.h>
 using namespace std;
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
-
-//ordered_set
-template<class T> using oset =tree<T, null_type, less<T>, rb_tree_tag,tree_order_statistics_node_update> ;
-#define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-
-//find_by_order(k)  returns iterator to kth element starting from 0;
-//order_of_key(k) returns count of elements strictly smaller than k;
-//erase,insert same as normal set
-//define it as oset<int> s; or oset<pair<int,int>> s;
-
-//bunch of pragmas
-#pragma GCC optimize("O3")
-#pragma GCC optimize("Ofast,unroll-loops,no-stack-protector,fast-math")
-#pragma comment(linker, "/stack:200000000")
-#pragma GCC target("sse,sse2,sse3,sse4,popcnt,abm,mmx,tune=native")
-
-
-//#pragma Gcc target("avx2,fma,avx")
-//(Uncomment when needed and be sure it not give TLE bcoz it requires time)
-//#pragma GCC optimize "trapv"//to check integer overflow and gives RE.
-
-//macros
-#define ull unsigned long long int
-#define ll long long
-#define ii pair<int,int>
-#define vii vector<ii>
-#define vi vector<int>
 #define vl vector<ll>
 #define mii map<int,int>
 #define uii unordered_map<int,int>
 #define all(x) x.begin(),x.end()
+#define fr(a,b) for(int i = a ; i<b ;i++)
 #define ff first
-#define fr(i,a,b) for(int i= a ;i<=b ;i++)
 #define ss second
+#define ull unsigned long long int
+#define ll long long
 #define fast_io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 #define endl "\n"
-#define pb push_back
 #define INF 1e18
-#define lcm(a,b) a*b/__gcd(a,b)
-#define print(x) cout<<x<<"\n";
-#define scanv(v,n) for(int i  = 0 ; i<n ;i++ ) cin>>v[i];
-#define printv(v) for(auto it : v) cout<<it<<" ";
-#define rall(v) v.rbegin(),v.rend()
-#define GOOGLE(i) cout<<"Case"<<" #"<<i<<": ";
 #define Time cerr<<"\nTime Taken : "<<(float)(clock()-time_p)/CLOCKS_PER_SEC<<"\n";
 clock_t time_p=clock();
-
-//boost for big int 
-//#include<boost/multiprecision/cpp_int.hpp>
-//uncoment for large int requirement
-//using boost::multiprecision::cpp_int;
-
-//forced_functions 
-void file_io(){
-fast_io
+const long long int MOD = 1e9+7;
+int main(){
+    fast_io
     #ifndef ONLINE_JUDGE
     freopen("inputa.txt","r",stdin);
     freopen("outputa.txt","w",stdout);
     freopen("log.txt","w",stderr);
     #endif
+      //meet in middle technique
+     // is used when brute is not applied then we use this technique
+     // algo
+     // (1) split set into two subsets
+     //(2) find all possible subsets sum of given set say X and for other say Y
+     //(3) if we check naively then our complexity still is O(2^(n/2)*(2^(n/2)) that is same as brute :(
+     //   so what we do is sort one of the X or Y and binary search for the value.
+     //   this reduce are complexity O(2^(n/2)*log(2^(n/2))) which is roughly O(2^(n/2)*n) which will work for n == 40
+//(Q) find maximum sum subset smaller than some element X
+int n;
+cin>>n;
+ll x;
+vector<ll> v(n);
+for(ll i  = 0 ; i<n ;i ++){
+    cin>>v[i];
 }
-
-//safe_hash
-struct custom_hash {
-    static uint64_t splitmix64(uint64_t x) {
-        // http://xorshift.di.unimi.it/splitmix64.c
-        x += 0x9e3779b97f4a7c15;
-        x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
-        x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
-        return x ^ (x >> 31);
+cin>>x;
+ll tota = 1LL<<(n/2LL);
+ll totb = 1LL<<(n-n/2LL);
+vector<ll> a;//subset sum for 1st half
+vector<ll> b;//subset sum for 2nd half
+for(ll i = 0 ; i<tota ;i++){
+    ll sum = 0 ;
+    for(ll j = 0 ; j<n/2 ; j++){
+        //cout<<v[j]<<" ";
+       if(i&(1LL<<j))
+        sum+=v[j];
     }
-
-    size_t operator()(uint64_t x) const {
-        static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
-        return splitmix64(x + FIXED_RANDOM);
-    }
-};
-//use it with unordered_map<T,T,custom_hash> safe_map
-
-//const
-const long long int MOD = 1e9+7;
-const long long int MOD2 = (119<<23)+1;//(119<<23)+1==998244353
-//random
-ll stoii(string s){
-    ll ans = 0;
-    for(auto it: s){
-        ll cur = it-'0';
-        ans = ans*10+cur;
-    }
-    return ans;
+    //cout<<endl;
+    a.push_back(sum);
 }
-
-//matrix stuff
-int dx[]={-1,0,1,0};
-int dy[]={0,1,0,-1};
-
-bool test = true;
-bool file = true;
-vector<int> primes;
-const ll N = 300;
-bool isprime[N];
-map<int,bool> m;
-void pre(){
-    memset(isprime,false,sizeof(isprime));
-    isprime[0]=isprime[1] = true;
-    for(int i = 2 ;i*i<=N ;i++){
-        if(!isprime[i])
-        for(int j = 2*i ;j<N ;j+=i){
-            isprime[j] = true; 
-        }
+for(ll i = 0 ; i<totb ;i++){
+    ll sum = 0 ;
+    for(ll j = 0; j<(n-n/2) ; j++){
+       if(i&(1LL<<j))
+        sum+=v[j+n/2];
     }
-    for(int i = 2 ;i<N ;i++){
-        if(!isprime[i])
-            primes.pb(i);
-    }
-    vector<int> semiprimes;
-    for(auto prime : primes){
-        for(auto prime2 :primes){
-          if( prime == prime2)  continue;
-          if(prime*prime2<=200)
-          semiprimes.pb(prime*prime2);
-        }
-    }
-    for(auto sem : semiprimes){
-        for(auto sem2 : semiprimes){
-            if(!m.count(sem+sem2))
-                m[sem+sem2] = true;
-        }
-    }
-
+    b.push_back(sum);
 }
-void solve(){
-
-    ll n;
-    cin>>n;
-    if(m.count(n)){
-        cout<<"YES"<<"\n";
-    }
-    else{
-        cout<<"NO"<<"\n";
-    }
-
+sort(b.begin(),b.end());//sorting for binary_searching
+ll ans  = -1 ;
+//cout<<a.size()<<" "<<b.size()<<endl;
+for(ll i = 0 ; i<a.size();i++){
+    //cout<<a[i]<<" ";
+    ll ele = a[i];
+    if(ele>x)
+        continue;
+   ll fi = x - ele;
+   auto itr = lower_bound(b.begin(),b.end(),fi);
+   if(itr==b.end() ||(*itr)!=fi )
+    itr--;
+     ans = max(ans,ele+(*itr));
+     //cout<<ans<<" ";
 }
-int main(){
-    if(file)
-      file_io();
-  pre();
-    int t ;
-    t = 1 ;
-    if(test)
-    cin>>t;
-    while(t--){
-            solve();
-
-    }
-    Time
+cout<<ans<<endl;
 }
-
-

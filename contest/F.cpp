@@ -100,33 +100,9 @@ ll stoii(string s){
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
 
-bool test = true;
+bool test = false;
 bool file = true;
 void solve(){
- ll n;
- cin>>n;
- vl v(n);
- scanv(v,n);
- deque<ll> dq;
- ll ans = 0 ; 
- map<ll,ll> m;
- oset<pair<ll,ll>> o;
- o.insert({v[0],0});
- dq.push_front(v[0]);
- m[v[0]]++;
- for(int i = 1 ;i<n ;i++){
- 
- ll one = o.order_of_key({v[i],i}) ;
- 	
- 	ll two = o.size()-(one);
- 	// cout<<one<<" "<<two<<endl;
- 	one-=m[v[i]];
- 	ans+=(min(one,two));
-
- 	o.insert({v[i],i});
- 	m[v[i]]++;
- }
- cout<<ans<<endl;
 
 }
 int main(){
