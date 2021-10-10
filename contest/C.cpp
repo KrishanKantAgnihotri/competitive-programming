@@ -100,10 +100,28 @@ ll stoii(string s){
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
 
-bool test = false;
+bool test = true;
 bool file = true;
 void solve(){
-
+    ll n;
+    cin>>n;
+    vl v(n);
+    scanv(v,n);
+    ll sm = 0 ; 
+    for(int i = 0 ; i<n ;i++) sm+=v[i];
+    // sm/n = (sm-v[i]-x)/(n-2)
+    // sm*(n-2) = (sm-v[i]-x)*n
+    // sm*n - 2*sm = sm*n -v[i]*n - x*n
+    // v[i]*n - 2*sm = -x*n
+    // x = (2*sm-v[i]*n)/n
+    //x*n = 2*sm-v[i]*n
+    map<ll,ll> m;
+ll ans = 0 ; 
+for(int i = 0 ; i<n ;i++){
+    ans+=m[ (2*sm-v[i]*n)];
+    m[v[i]*n]++;
+}
+cout<<ans<<endl;
 }
 int main(){
     if(file)

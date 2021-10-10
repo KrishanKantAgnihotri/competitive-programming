@@ -1,122 +1,208 @@
-//Author : Krishan Kant Agnihotri        
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+// #include <sys/resource.h>
+// #include <ext/pb_ds/assoc_container.hpp>
+// #include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
+// using namespace __gnu_pbds;
 
-//ordered_set
-template<class T> using oset =tree<T, null_type, less<T>, rb_tree_tag,tree_order_statistics_node_update> ;
-#define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
+// Pragmas
+#pragma GCC optimize("Ofast")
+#pragma GCC target("avx,avx2,fma")
 
-//find_by_order(k)  returns iterator to kth element starting from 0;
-//order_of_key(k) returns count of elements strictly smaller than k;
-//erase,insert same as normal set
-//define it as oset<int> s; or oset<pair<int,int>> s;
+// Aliases
+using ll = long long;
+using ull = unsigned long long;
+using ld = long double;
+// template<typename T>
+// using oset =  tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
-//bunch of pragmas
-#pragma GCC optimize("O3")
-#pragma GCC optimize("Ofast,unroll-loops,no-stack-protector,fast-math")
-#pragma comment(linker, "/stack:200000000")
-#pragma GCC target("sse,sse2,sse3,sse4,popcnt,abm,mmx,tune=native")
+// Constants
+constexpr ll INF = 2e18;
+constexpr ld EPS = 1e-9;
+constexpr ll MOD = 998244353;// 1e9 + 7;
 
+// Macros
+#define F first
+#define S second
+#define all(x) begin(x), end(x)
+#define allr(x) rbegin(x), rend(x)
+#define int long long
 
-//#pragma Gcc target("avx2,fma,avx")
-//(Uncomment when needed and be sure it not give TLE bcoz it requires time)
-//#pragma GCC optimize "trapv"//to check integer overflow and gives RE.
-
-//macros
-#define ull unsigned long long int
-#define ll long long
-#define ii pair<int,int>
-#define vii vector<ii>
-#define vi vector<int>
-#define vl vector<ll>
-#define mii map<int,int>
-#define uii unordered_map<int,int>
-#define all(x) x.begin(),x.end()
-#define ff first
-#define fr(i,a,b) for(int i= a ;i<=b ;i++)
-#define ss second
-#define fast_io ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
-#define endl "\n"
-#define pb push_back
-#define INF 1e18
-#define lcm(a,b) a*b/__gcd(a,b)
-#define print(x) cout<<x<<"\n";
-#define scanv(v,n) for(int i  = 0 ; i<n ;i++ ) cin>>v[i];
-#define printv(v) for(auto it : v) cout<<it<<" ";
-#define rall(v) v.rbegin(),v.rend()
-#define GOOGLE(i) cout<<"Case"<<" #"<<i<<": ";
-#define Time cerr<<"\nTime Taken : "<<(float)(clock()-time_p)/CLOCKS_PER_SEC<<"\n";
-clock_t time_p=clock();
-
-//boost for big int 
-//#include<boost/multiprecision/cpp_int.hpp>
-//uncoment for large int requirement
-//using boost::multiprecision::cpp_int;
-
-//forced_functions 
-void file_io(){
-fast_io
-    #ifndef ONLINE_JUDGE
-    freopen("inputa.txt","r",stdin);
-    freopen("outputa.txt","w",stdout);
-    freopen("log.txt","w",stderr);
-    #endif
-}
-
-//safe_hash
-struct custom_hash {
-    static uint64_t splitmix64(uint64_t x) {
-        // http://xorshift.di.unimi.it/splitmix64.c
+// Custom hash map
+struct custom_hash
+{
+    static uint64_t splitmix64(uint64_t x)
+    {
         x += 0x9e3779b97f4a7c15;
         x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
         x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
         return x ^ (x >> 31);
     }
 
-    size_t operator()(uint64_t x) const {
+    size_t operator()(uint64_t x) const
+    {
         static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
         return splitmix64(x + FIXED_RANDOM);
     }
 };
-//use it with unordered_map<T,T,custom_hash> safe_map
+template <typename T1, typename T2> // Key should be integer type
+using safe_map = unordered_map<T1, T2, custom_hash>;
 
-//const
-const long long int MOD = 1e9+7;
-const long long int MOD2 = (119<<23)+1;//(119<<23)+1==998244353
-//random
-ll stoii(string s){
-    ll ans = 0;
-    for(auto it: s){
-        ll cur = it-'0';
-        ans = ans*10+cur;
+// Operator overloads
+template<typename T1, typename T2> // cin >> pair<T1, T2>
+istream& operator>>(istream &istream, pair<T1, T2> &p) { return (istream >> p.first >> p.second); }
+template<typename T> // cin >> vector<T>
+istream& operator>>(istream &istream, vector<T> &v) { for (auto &it : v) cin >> it; return istream; }
+template<typename T1, typename T2> // cout << pair<T1, T2>
+ostream& operator<<(ostream &ostream, const pair<T1, T2> &p) { return (ostream << p.first << " " << p.second); }
+template<typename T> // cout << vector<T>
+ostream& operator<<(ostream &ostream, const vector<T> &c) { for (auto &it : c) cout << it << " "; return ostream; }
+
+// Utility functions
+template <typename T>
+void print(T &&t)  { cout << t << "\n"; }
+template <typename T, typename... Args>
+void print(T &&t, Args &&... args)
+{
+    cout << t << " ";
+    print(forward<Args>(args)...);
+}
+
+template <typename T>
+int32_t size_i(T &container) { return static_cast<int32_t>(container.size()); }
+
+// Mathematical functions
+int GCD(int a, int b) {
+    while (b)
+    {
+        a %= b;
+        swap(a, b);
     }
-    return ans;
+    return a;
 }
-
-//matrix stuff
-int dx[]={-1,0,1,0};
-int dy[]={0,1,0,-1};
-
-bool test = false;
-bool file = true;
-void solve(){
-
-}
-int main(){
-    if(file)
-      file_io();
-    int t ;
-    t = 1 ;
-    if(test)
-    cin>>t;
-    while(t--){
-            solve();
-
+int GCD_extended(int a, int b, int &x, int &y) {
+    x = 1, y = 0;
+    int x1 = 0, y1 = 1, a1 = a, b1 = b;
+    while (b1)
+    {
+        int q = a1 / b1;
+        tie(x, x1) = make_tuple(x1, x - q * x1);
+        tie(y, y1) = make_tuple(y1, y - q * y1);
+        tie(a1, b1) = make_tuple(b1, a1 - q * b1);
     }
-    Time
+    return a1;
+}
+int LCM(int a, int b)
+{
+    return (a * b) / GCD(a, b);
 }
 
+int modpow(ll x, int n, int m = MOD)
+{
+    ll res = 1;
+    while (n > 0) 
+    {
+        if (n & 1)
+            res = (res * x) % m;
+        x = (x * x) % m;
+        n >>= 1;
+    }
+    return res;
+}
+int modinv(int x, int m = MOD)
+{   
+    return modpow(x, m - 2, m);
+}
 
+mt19937 rng;
+int getRandomNumber(int l, int r)
+{
+    uniform_int_distribution<int> dist(l, r);
+    return dist(rng);
+}
+
+// void allocateStackMax()
+// {
+//     rlimit R;
+//     getrlimit(RLIMIT_STACK, &R);
+//     R.rlim_cur = R.rlim_max;
+//     setrlimit(RLIMIT_STACK, &R);
+// }
+
+// Flags to use: -std=c++17 -O2 -DLOCAL_PROJECT -Wshadow -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -fsanitize=address -fsanitize=undefined
+///////////////////////////////////////////////////////////// START CODE HERE /////////////////////////////////////////////////////////////
+
+constexpr int N = 2e5 + 10;
+
+int nC2(int n)
+{
+    if (n < 2) return 0;
+    return (n * (n - 1)) / 2;
+}
+
+int nC3(int n)
+{
+    if (n < 3) return 0;
+    return (n * (n - 1) * (n - 2)) / 6;
+}
+
+void preSolve()
+{
+    rng = mt19937(chrono::steady_clock::now().time_since_epoch().count());
+    // allocateStackMax();
+}
+
+void solve(int tc)
+{
+    int n;
+    cin >> n;
+    vector<pair<int, int>> a(n);
+    cin >> a;
+    map<int, vector<int>> t, d;
+    for (auto [ti, di] : a)
+    {
+        t[ti].push_back(di);
+        d[di].push_back(ti);
+    }
+
+    int ans = nC3(n);
+    for (auto &[ti, dv] : t)
+    {
+        if (dv.size() < 2) continue;
+        for (auto di : dv)
+        {
+            int curr = (d[di].size() - 1) * (dv.size() - 1);
+            ans -= curr;
+        }
+    }
+    print(ans);
+}
+
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout << setprecision(12) << fixed;
+
+    preSolve();
+    int tests = 1;
+    cin >> tests;
+    for (int tt = 1; tt <= tests; tt++)
+        solve(tt);
+    return 0;
+}
+
+//     vector<int> tv, dv;
+//     for (auto it : t) tv.push_back(it.S);
+//     for (auto it : d) dv.push_back(it.S);
+
+//     int x = 0, y = 0;
+//     for (auto ti : tv)
+//         x += nC2(ti) * (n - ti) + nC3(ti);
+//     for (auto di : dv)
+//         y += nC2(di) * (n - di) + nC3(di);
+
+//     int ans = 2 * nC3(n) - x - y;
+//     ans -= nC3(n);
+//     ans += x + y;
+//     print(ans);

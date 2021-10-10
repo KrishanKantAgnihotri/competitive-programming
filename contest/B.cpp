@@ -100,10 +100,35 @@ ll stoii(string s){
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
 
-bool test = false;
+bool test = true;
 bool file = true;
 void solve(){
+    ll n;
+    cin>>n;
+    vector<vector<int>> v(n,vector<int>(5));
+    for(int i = 0 ;i<n ;i++){
+        for(int j = 0 ;j<5 ;j++){
+            cin>>v[i][j];
+        }
+    }
+    for(int i = 0 ; i<5 ;i++){
+        for(int j = i+1 ;j<5 ;j++){
+            int a,b,c;
+            a = b = c = 0 ; 
+            for(int k = 0 ;k<n ;k++){
+                if(v[k][i]) a++;
+                if(v[k][j]) b++;
+                if(v[k][i] && v[k][j]) c++;
 
+            }
+            if(a*2>=n && b*2>=n && (a+b) == (n+c) ){
+                cout<<"YES\n";
+                return ;
+            }
+        }
+
+    }
+    cout<<"NO\n";
 }
 int main(){
     if(file)

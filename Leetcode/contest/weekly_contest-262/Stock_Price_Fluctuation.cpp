@@ -1,38 +1,45 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 #define ll long long int
-class StockPrice {
+class StockPrice
+{
 public:
-    set<pair<ll,ll>> s;
-    map<ll,ll> m;
+    set<pair<ll, ll>> s;
+    map<ll, ll> m;
     int last;
-    StockPrice() {
-        
+    StockPrice()
+    {
     }
-    
-    void update(int timestamp, int price) {
-        if(m.count(timestamp)){
-            pair<ll,ll> p1 = {m[timestamp],timestamp};
+
+    void update(int timestamp, int price)
+    {
+        if (m.count(timestamp))
+        {
+            pair<ll, ll> p1 = {m[timestamp], timestamp};
             s.erase(p1);
-            m[timestamp]  = price;
-            s.insert({price,timestamp});
-        }
-        else {
             m[timestamp] = price;
-            s.insert({price,timestamp});
+            s.insert({price, timestamp});
         }
-        last = max(last,timestamp);
+        else
+        {
+            m[timestamp] = price;
+            s.insert({price, timestamp});
+        }
+        last = max(last, timestamp);
     }
-    
-    int current() {
-         return m[last];
+
+    int current()
+    {
+        return m[last];
     }
-    
-    int maximum() {
+
+    int maximum()
+    {
         return m[(*s.rbegin()).second];
     }
-    
-    int minimum() {
+
+    int minimum()
+    {
         return m[(*s.begin()).second];
     }
 };
