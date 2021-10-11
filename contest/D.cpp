@@ -103,28 +103,18 @@ int dy[]={0,1,0,-1};
 bool test = true;
 bool file = true;
 void solve(){
-	ll n;
-	cin>>n;
-	vector<pair<ll,ll>> v(n);
-	// scanv(v,n);
-	for(int i = 0 ;i <n ;i++){
-		cin>>v[i].ff>>v[i].ss;
+	ll x;
+	cin>>x;
+	ll st = 0 ;
+	ll mex = 0 ;
+	ll ans ;  
+	while(st<=x){
+		ans = mex;
+		mex++;
+		st|=mex;
 	}
-	map<ll,vector<ll>> a,b;
-	for(auto  ele :v){
-		a[ele.ff].pb(ele.ss);
-		b[ele.ss].pb(ele.ff);
-	}
-	ll ans = (n*(n-1)*(n-2)/6LL);
-	ll x = 0; 
-	for(auto ele : a){
-		if(ele.ss.size()<2) continue;
-		for(auto it : ele.ss){
-			x+=(b[it].size()-1)*(ele.ss.size()-1);
-		}
-	}
-	ans-=x;
-	cout<<ans<<endl;
+	cout<<ans+1<<endl;
+
 }
 int main(){
     if(file)

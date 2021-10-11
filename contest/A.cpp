@@ -103,18 +103,10 @@ int dy[]={0,1,0,-1};
 bool test = true;
 bool file = true;
 void solve(){
-
-    ll n;
-    cin>>n;
-    vector<string> v(2);
-    for(int i = 0 ; i<2 ;i++) cin>>v[i];
-    for(int i = 0 ;i <n ;i++){
-        if(v[0][i] == v[1][i] && v[0][i] =='1'){
-            cout<<"NO\n";
-            return ;
-        }
-    }
-    cout<<"YES\n";
+    ll d,a,b,c;
+    cin>>d>>a>>b>>c;
+    ll sm = (a+b+c+d-1)/c;
+    cout<<sm<<endl;
 }
 int main(){
     if(file)

@@ -103,32 +103,22 @@ int dy[]={0,1,0,-1};
 bool test = true;
 bool file = true;
 void solve(){
-    ll n;
-    cin>>n;
-    vector<vector<int>> v(n,vector<int>(5));
-    for(int i = 0 ;i<n ;i++){
-        for(int j = 0 ;j<5 ;j++){
-            cin>>v[i][j];
+    ll n,m;
+    cin>>n>>m;
+    if(n > 0 && m >0){
+        cout<<"Solution";
+    }
+    else{
+        if(n==0){
+            cout<<"Solid";
+        }
+        else{
+            cout<<"Liquid";
+
         }
     }
-    for(int i = 0 ; i<5 ;i++){
-        for(int j = i+1 ;j<5 ;j++){
-            int a,b,c;
-            a = b = c = 0 ; 
-            for(int k = 0 ;k<n ;k++){
-                if(v[k][i]) a++;
-                if(v[k][j]) b++;
-                if(v[k][i] && v[k][j]) c++;
+    cout<<endl;
 
-            }
-            if(a*2>=n && b*2>=n && (a+b) == (n+c) ){
-                cout<<"YES\n";
-                return ;
-            }
-        }
-
-    }
-    cout<<"NO\n";
 }
 int main(){
     if(file)
