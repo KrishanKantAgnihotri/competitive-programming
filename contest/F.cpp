@@ -37,11 +37,50 @@ int t;
 t = 1;
 cin>>t;
 while(t--){
-	ll d,a,b,c;
-    cin>>d>>a>>b>>c;
-    ll sm = (a+b+c+d-1)/c;
-    cout<<sm<<endl;
+	ll n,k;
+	cin>>n>>k;
+	queue<ll> q;
+	ll m = n-1 ;
+	vector<vector<ll>> adj(n+1,vector<ll>());
+	vector<ll> in(n+1); 
+	while(m--){
+		ll u,v;
+		cin>>u>>v;
+		adj[u].pb(v);
+		adj[v].pb(u);
+		in[v]++;
+		in[u]++;
+	}
+	for(int i = 1 ; i<=n ;i++){
+		if(in[i] <= 1) q.push(i);
+	}
+bool vis[n+1];
+ll ans = n;
+memset(vis,false,sizeof(vis));
 
+	while(q.size()){
+		ll m = q.size();
+		// cout<<m<<" ";
+		if(k == 0) break;
+		k--;
+		for(int i = 0 ; i<m ;i++){
+		 ll u = q.front();
+		 q.pop();
+		 if(vis[u]) continue;
+		ans--;
+		
+		vis[u] = true;
+		for(auto child : adj[u]){
+			if(vis[child]) continue;
+			in[child]--;
+			if(in[child]<=1){
+				q.push(child);
+			}
+		}
+	}
+	}
+	// ans-=q.size();
+	cout<<ans<<endl;
 }
 Time
 }
