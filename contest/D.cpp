@@ -100,26 +100,10 @@ ll stoii(string s){
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
 
-bool test = true;
+bool test = false;
 bool file = true;
 void solve(){
-	ll n;
-	cin>>n;
-	vl v(n);
-	scanv(v,n);
-	ll g = 0 ; 
-	ll mn = *min_element(all(v));
-	for(int i = 0 ; i<n;i++){
-		if(v[i] == mn) continue;
 
-		g = __gcd(g,v[i]-mn);
-	}
-	if(g == 0){
-		cout<<"-1"<<endl;
-	}
-	else{
-		cout<<g<<endl;
-	}
 }
 int main(){
     if(file)

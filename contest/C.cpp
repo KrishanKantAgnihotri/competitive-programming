@@ -100,29 +100,10 @@ ll stoii(string s){
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
 
-bool test = true;
+bool test = false;
 bool file = true;
 void solve(){
-    ll k;
-    cin>>k;
-    ll n;
-    cin>>n;
-    vector<pair<ll,ll>> v(n);
-    for(int i  = 0 ; i<n ;i++){
-        cin>>v[i].ff;
-        v[i].ss = v[i].ff;
-        v[i].ff = k-v[i].ff;
-    }
-    sort(all(v));
-    ll ans = 0 ; 
-    ll sm = 0 ; 
 
-    for(int i  = 0 ; i<n ;i++){
-        if(sm>=v[i].ss) continue;
-        sm+=v[i].ff;
-        ans++;
-    }
-    cout<<ans<<endl;
 }
 int main(){
     if(file)

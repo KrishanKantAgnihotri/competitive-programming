@@ -100,22 +100,9 @@ ll stoii(string s){
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
 
-bool test = true;
+bool test = false;
 bool file = true;
 void solve(){
-    string s;
-    cin>>s;
-    ll n = s.length();
-    ll ans = INF;
-    for(int i = 0 ;i <n ;i++){
-        for(int j = i+1 ;j<n ;j++){
-            if(s[i]=='0' && s[j]=='0') ans = min(ans,n-i-2);
-            if(s[i]=='5' && s[j]=='0') ans = min(ans,n-i-2);
-            if(s[i]=='2' && s[j]=='5') ans = min(ans,n-i-2);
-            if(s[i]=='7' && s[j]=='5') ans = min(ans,n-i-2);
-        }
-    }
-    cout<<ans<<endl;
 
 }
 int main(){

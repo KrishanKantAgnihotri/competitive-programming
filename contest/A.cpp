@@ -100,34 +100,38 @@ ll stoii(string s){
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
 
-bool test = true;
+bool test = false;
 bool file = true;
 void solve(){
-    ll a,b,c;
-    cin>>a>>b>>c;
-    ll mx = max({a,b,c});
-    ll cnt = 0 ; 
-    if(mx == a) cnt++;
-    if(mx == b) cnt++;
-    if(mx == c) cnt++;
-    if(cnt >1 ){
-        cout<<mx-a+1<<" "<<mx-b+1<<" "<<mx-c+1<<endl;
+   ll n;
+   cin>>n;
+   vector<pair<ll,ll>> v(n);
+   vector<double> t;
+   for(int i = 0 ;i<n ;i++){
+    cin>>v[i].ff>>v[i].ss;
+    t.push_back((double)v[i].ff/v[i].ss*1.0);
+   }
+   double sm = 0.0 ; 
+   cout<<fixed<<setprecision(10);
+   for(int i = 0 ; i<n ;i++){
+    sm+=t[i];
+   }
+   sm/=2;
+   double ans = 0.0 ;
+   int i = 0 ;  
+   while(sm){
+    if(sm>(v[i].ff/v[i].ss)){
+        sm-=(v[i].ff/v[i].ss);
+        ans+=v[i].ff;
+        i++;
     }
     else{
-        if(mx == a){
-            cout<<0<<" ";
-        }
-        else cout<<mx-a+1<<" ";
-        if(mx == b){
-            cout<<0<<" ";
-        }
-        else cout<<mx-b+1<<" ";
-        if(mx == c){
-            cout<<0<<" ";
-        }
-        else cout<<mx-c+1<<" ";
-        cout<<endl;
+        ans+=(sm*v[i].ss);
+        break;
     }
+   }
+   cout<<ans<<endl;
+
 
 }
 int main(){

@@ -102,51 +102,9 @@ int dy[]={0,1,0,-1};
 
 bool test = true;
 bool file = true;
-void solve(){
-	ll n;
-	cin>>n;
-	ll k;
-	cin>>k;
-	ll m = n-1 ;
-	vector<vector<ll>> adj(n+1,vector<ll>());
-	vector<bool> vis(n+1,false);
-	vector<ll> deg(n+1);
-	while(m--){
-		ll u,v;
-		cin>>u>>v;
-		adj[u].pb(v);
-		adj[v].pb(u);
-		deg[u]++;
-		deg[v]++;
-	}
-	queue<ll> q;
-	for(int i = 1;i<=n ;i++){
-		if(deg[i]<=1) q.push(i);
-	}
-	ll ans = n;
-	while(q.size()){
-		ll m = q.size();
-		if(k == 0) break;
-		k--;
-		for(int i = 0 ; i<m ;i++){
-			ll u = q.front();
-			q.pop();
-			if(vis[u]) continue;
-				
-			vis[u] = true;
-			ans--;
-			for(auto child : adj[u]){
-				if(vis[child]) continue;
-					
-			
-				deg[child]--;
-				if(deg[child]<=1){
-					q.push(child);
-				}
-			}
-		}
-	}
-	cout<<ans<<endl;
+void solve(int t){
+    if(t == 0) cout<<" ";
+    else cout<<endl;
 }
 int main(){
     if(file)
@@ -155,9 +113,12 @@ int main(){
     t = 1 ;
     if(test)
     cin>>t;
+int i = 1 ;
     while(t--){
-            solve();
-
+        GOOGLE(i);
+       
+            solve(t);
+             i++;
     }
     Time
 }
