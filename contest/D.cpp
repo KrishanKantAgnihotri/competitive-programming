@@ -97,10 +97,10 @@ ll stoii(string s){
 }
 
 //matrix stuff
-int dx[]={-1,0,1,0};
-int dy[]={0,1,0,-1};
 
-bool test = false;
+//think maybe binary search 
+//minimum count to make answer as k;
+bool test = true;
 bool file = true;
 void solve(){
 

@@ -99,40 +99,26 @@ ll stoii(string s){
 //matrix stuff
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
-
-bool test = false;
+const ll N = 1e6+2;
+ll dp[N];
+bool test = true;
 bool file = true;
 void solve(){
-   ll n;
-   cin>>n;
-   vector<pair<ll,ll>> v(n);
-   vector<double> t;
-   for(int i = 0 ;i<n ;i++){
-    cin>>v[i].ff>>v[i].ss;
-    t.push_back((double)v[i].ff/v[i].ss*1.0);
+   ll x,y;
+   cin>>x>>y;
+   if(x == y){
+    cout<<0<<endl;
+    return ;
    }
-   double sm = 0.0 ; 
-   cout<<fixed<<setprecision(10);
-   for(int i = 0 ; i<n ;i++){
-    sm+=t[i];
+   if(y>x){
+    ll diff = (y-x);
+    ll ans ;
+    ans = (diff+1)/2 +(diff%2);
+    cout<<ans<<endl;
    }
-   sm/=2;
-   double ans = 0.0 ;
-   int i = 0 ;  
-   while(sm){
-    if(sm>(v[i].ff/v[i].ss)){
-        sm-=(v[i].ff/v[i].ss);
-        ans+=v[i].ff;
-        i++;
-    }
-    else{
-        ans+=(sm*v[i].ss);
-        break;
-    }
-   }
-   cout<<ans<<endl;
-
-
+   else{
+    cout<<(x-y)<<endl;
+   }   
 }
 int main(){
     if(file)

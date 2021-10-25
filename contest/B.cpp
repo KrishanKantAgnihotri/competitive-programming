@@ -100,9 +100,17 @@ ll stoii(string s){
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
 
-bool test = false;
+bool test = true;
 bool file = true;
 void solve(){
+    ll n,m;
+    cin>>n>>m;
+    ll r = n*m;
+    if(m>1)
+    cout<<(n*(2LL))<<" "<<(r-1)*r<<endl;
+    else
+    cout<<(n)<<" "<<n<<endl;
+     
 
 }
 int main(){
