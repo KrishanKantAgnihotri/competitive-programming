@@ -97,13 +97,30 @@ ll stoii(string s){
 }
 
 //matrix stuff
-
-//think maybe binary search 
-//minimum count to make answer as k;
-bool test = true;
+int dx[]={-1,0,1,0};
+int dy[]={0,1,0,-1};
+const ll N = 2e5+3;
+ll dp[N];
+bool test = false;
 bool file = true;
 void solve(){
-
+	ll n,m;
+	cin>>n>>m;
+	memset(dp,0,n+1);
+	vector<ll> sum(1e7,0);
+	dp[n] = 1;
+	sum[n] = 1;
+	for(int i = n-1  ;i>=1 ;i--){
+		sum[i] = sum[i+1];
+		dp[i] = sum[i];
+		for(ll j = 2 ;j*i<=n ;j++){
+			dp[i]+=((sum[j*i]-sum[i*j+j]+m)%m)%m;
+			dp[i]%=m;
+		}
+		sum[i]+= dp[i];
+		sum[i]%=m;
+	}
+	cout<<dp[1]<<endl;
 }
 int main(){
     if(file)
@@ -118,5 +135,7 @@ int main(){
     }
     Time
 }
+
+
 
 

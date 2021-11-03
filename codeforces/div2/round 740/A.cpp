@@ -113,29 +113,45 @@ ll stoii(string s)
 //matrix stuff
 int dx[] = {-1, 0, 1, 0};
 int dy[] = {0, 1, 0, -1};
-
+bool check(vl v)
+{
+    for (int i = 1; i < v.size(); i++)
+    {
+        if (v[i] < v[i - 1])
+        {
+            return false;
+        }
+    }
+    return true;
+}
 bool test = true;
 bool file = true;
 void solve()
 {
-    string s;
-    cin >> s;
-    ll n = s.length();
-    ll a = 0;
-    ll b = 0;
-    for (int i = 0; i < n; i++)
+    ll n;
+    cin >> n;
+    vl v(n);
+    scanv(v, n);
+    ll cnt = 0;
+    for (int i = 1; i <= n; i++)
     {
-        if (s[i] == 'L')
-            a--;
-        if (s[i] == 'R')
-            a++;
-        if (s[i] == 'U')
-            b--;
-        if (s[i] == 'D')
-            b++;
+        bool ok = false;
+        if (check(v))
+            break;
+        for (int j = !(i % 2); j + 1 < n; j += 2)
+        {
+            if (v[j] > v[j + 1])
+            {
+                ok = true;
+                swap(v[j], v[j + 1]);
+            }
+        }
+        cnt++;
+        // printv(v);
+        // cout<<endl;
+        // cout<<cnt<<endl;
     }
-    ll ans = (abs(a) + 1) / 2 + (abs(b) + 1) / 2;
-    cout << ans << endl;
+    cout << cnt << endl;
 }
 int main()
 {

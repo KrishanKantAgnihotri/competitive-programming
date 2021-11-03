@@ -113,29 +113,31 @@ ll stoii(string s)
 //matrix stuff
 int dx[] = {-1, 0, 1, 0};
 int dy[] = {0, 1, 0, -1};
-
-bool test = true;
+const ll N = 4e6 + 3;
+ll dp[N];
+bool test = false;
 bool file = true;
 void solve()
 {
-    string s;
-    cin >> s;
-    ll n = s.length();
-    ll a = 0;
-    ll b = 0;
-    for (int i = 0; i < n; i++)
+    ll n, m;
+    cin >> n >> m;
+    memset(dp, 0, n + 1);
+    vector<ll> sum(1e7, 0);
+    dp[n] = 1;
+    sum[n] = 1;
+    for (ll i = n - 1; i >= 1; i--)
     {
-        if (s[i] == 'L')
-            a--;
-        if (s[i] == 'R')
-            a++;
-        if (s[i] == 'U')
-            b--;
-        if (s[i] == 'D')
-            b++;
+        sum[i] = sum[i + 1];
+        dp[i] = sum[i];
+        for (ll j = 2; j * i <= n; j++)
+        {
+            dp[i] += ((sum[j * i] - sum[i * j + j] + m) % m) % m;
+            dp[i] %= m;
+        }
+        sum[i] += dp[i];
+        sum[i] %= m;
     }
-    ll ans = (abs(a) + 1) / 2 + (abs(b) + 1) / 2;
-    cout << ans << endl;
+    cout << dp[1] << endl;
 }
 int main()
 {

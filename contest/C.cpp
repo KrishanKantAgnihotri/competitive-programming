@@ -103,17 +103,30 @@ int dy[]={0,1,0,-1};
 bool test = true;
 bool file = true;
 void solve(){
-    ll n,k;
-    cin>>n>>k;
-    //person comming 1st
-    if(k ==1){
-        cout<<2LL*(n-1)<<endl;
+    ll n;
+    cin>>n;
+    vector<pair<ll,ll>> v;
+    for(int i = 0 ; i<n; i++){
+        ll m;
+        cin>>m;
+        ll mx = -INF;
+        ll c = 0 ; 
+        for(int j = 0 ;j<m ;j++){
+            ll ele;
+            cin>>ele;
+            mx = max(mx,max(ele-c,0LL));
+            c++;
+        }
+        v.pb({mx,m});
     }
-    else {
-        
-        cout<<((2LL*n-k-1)/2LL)*2LL<<endl;
+    sort(all(v));
+    ll r = 0 ;
+    ll ans= -INF;
+    for(int i = 0 ; i<n ;i++){
+        ans = max(ans,v[i].ff-r);
+        r+=v[i].ss;
     }
-
+    cout<<ans+1<<endl;
 }
 int main(){
     if(file)

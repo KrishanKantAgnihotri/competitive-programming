@@ -118,24 +118,33 @@ bool test = true;
 bool file = true;
 void solve()
 {
-    string s;
-    cin >> s;
-    ll n = s.length();
-    ll a = 0;
-    ll b = 0;
+    ll n;
+    cin >> n;
+    vector<pair<ll, ll>> v;
     for (int i = 0; i < n; i++)
     {
-        if (s[i] == 'L')
-            a--;
-        if (s[i] == 'R')
-            a++;
-        if (s[i] == 'U')
-            b--;
-        if (s[i] == 'D')
-            b++;
+        ll m;
+        cin >> m;
+        ll mx = -INF;
+        ll c = 0;
+        for (int j = 0; j < m; j++)
+        {
+            ll ele;
+            cin >> ele;
+            mx = max(mx, max(ele - c, 0LL));
+            c++;
+        }
+        v.pb({mx, m});
     }
-    ll ans = (abs(a) + 1) / 2 + (abs(b) + 1) / 2;
-    cout << ans << endl;
+    sort(all(v));
+    ll r = 0;
+    ll ans = -INF;
+    for (int i = 0; i < n; i++)
+    {
+        ans = max(ans, v[i].ff - r);
+        r += v[i].ss;
+    }
+    cout << ans + 1 << endl;
 }
 int main()
 {

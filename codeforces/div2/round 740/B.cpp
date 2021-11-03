@@ -118,24 +118,25 @@ bool test = true;
 bool file = true;
 void solve()
 {
-    string s;
-    cin >> s;
-    ll n = s.length();
-    ll a = 0;
-    ll b = 0;
-    for (int i = 0; i < n; i++)
+    ll a, b;
+    cin >> a >> b;
+    map<ll, ll> m;
+    ll mn = abs(a - b) / 2;
+    for (int i = 0; i <= (a + b - 2 * mn); i += 2)
     {
-        if (s[i] == 'L')
-            a--;
-        if (s[i] == 'R')
-            a++;
-        if (s[i] == 'U')
-            b--;
-        if (s[i] == 'D')
-            b++;
+        m[mn + i]++;
     }
-    ll ans = (abs(a) + 1) / 2 + (abs(b) + 1) / 2;
-    cout << ans << endl;
+    if ((a + b) % 2)
+        for (int i = 1; i <= (a + b - 2 * mn); i += 2)
+        {
+            m[mn + i]++;
+        }
+    cout << m.size() << endl;
+    for (auto it : m)
+    {
+        cout << it.ff << " ";
+    }
+    cout << endl;
 }
 int main()
 {

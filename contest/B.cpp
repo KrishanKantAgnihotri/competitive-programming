@@ -102,15 +102,23 @@ int dy[]={0,1,0,-1};
 
 bool test = true;
 bool file = true;
-void solve(){
-    ll n,m;
-    cin>>n>>m;
-    ll r = n*m;
-    if(m>1)
-    cout<<(n*(2LL))<<" "<<(r-1)*r<<endl;
-    else
-    cout<<(n)<<" "<<n<<endl;
-     
+void solve(){   
+ll a,b;
+cin>>a>>b;
+map<ll,ll> m;
+ll mn = abs(a-b)/2;
+for(int i = 0 ; i<=(a+b-2*mn) ;i+=2){
+    m[mn+i]++;
+}
+if((a+b)%2)
+for(int i = 1 ;i<=(a+b-2*mn);i+=2){
+    m[mn+i]++;
+}
+cout<<m.size()<<endl;
+for(auto it : m){
+    cout<<it.ff<<" ";
+}
+cout<<endl;
 
 }
 int main(){
