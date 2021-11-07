@@ -103,59 +103,19 @@ int dy[]={0,1,0,-1};
 bool test = true;
 bool file = true;
 void solve(){
-	ll n,q;
-	cin>>n>>q;
-	string s;
-	cin>>s;
-	ll one[n+2]={0};
-	ll two[n+2]={0};
-	for(int i =1 ;i<=n ;i++){
-		one[i] = one[i-1];
-		two[i] = two[i-1];
-		if(s[i-1] == '+'){
-			if(i&1){
-			one[i]++;
-			two[i]--;
+	ll n,k;
+	cin>>n>>k;
+	while(k>1){
+		ll mx = 1e9;
+		while(n-mx<(k-1)){
+			mx/=10;
+
 		}
-		else{
-			one[i]--;
-			two[i]++;
-		}
-		}
-		else{
-			if(i&1){
-			one[i]--;
-			two[i]++;
-		}
-		else{
-			one[i]++;
-			two[i]--;
-		}
-		}
+		n-=mx;
+		k--;
+		cout<<mx<<" ";
 	}
-	while(q--){
-		ll l,r;
-		cin>>l>>r;
-		ll sz  = (r-l+1);
-		ll sum = 0;
-		if(l&1){
-			sum = one[r]-one[l-1];
-		}
-		else{
-			sum = two[r]-two[l-1];
-		}
-		if(sz&1){
-			cout<<1<<endl;
-		}
-		else{
-			// cout<<sum<<" ";
-			if(sum == 0){
-				cout<<0<<endl;
-			}
-			else 
-				cout<<2<<endl;
-		}
-	}
+	cout<<n<<endl;
 
 }
 int main(){

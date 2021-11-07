@@ -102,33 +102,60 @@ int dy[]={0,1,0,-1};
 
 bool test = true;
 bool file = true;
+ll ways[20];
+void pre(){
+    for(int i = 0 ; i<20 ;i ++){
+        ways[i] = 0 ; 
+    }
+   
+    for(int i =  0 ; i<10 ;i++){
+        for(int j = 0 ;j<10 ;j++){
+            ways[i+j]++;
+        }
+    }
+    // for(int i = 0 ;i <19 ; i++) cout<<ways[i]<<" ";
+    //     cout<<endl;
+}
 void solve(){
-ll n;
-cin>>n;
- string s;
- cin>>s;
- int zero = -1;
- for(int i = 0 ; i<n ;i++){
-    if(s[i] == '0'){
-        zero = i;
-        break;
+    string s;
+    cin>>s;
+    ll d[12]={0};
+    for(int i = 0 ; i<12;i++) d[i] = 0 ; 
+    reverse(all(s));
+    for(int i  = 0 ; i<12 ;i++){
+        if(i<s.length())
+          d[i] = s[i]-'0';
+        else
+        d[i] = 0 ;  
     }
- }
- if(zero == -1){
-    cout<<1<<" "<<n-1<<" "<<2<<" "<<n<<endl;
- }
- else {
-    if((zero+1)*2>n){
-        cout<<1<<" "<<zero+1<<" "<<1<<" "<<zero<<endl;
+    //brute force all carry 
+    ll ans = 0 ; 
+    for(ll i =0 ; i<(1<<12) ;i++){
+        if( (i&3)!=0) continue;
+        ll cnt = 1;
+        for(ll j  = 0 ;j<12;j++){
+            ll sm = d[j];
+            if(i&(1<<j)){
+                sm--;
+            }
+            if( (j<10) && (i&(1LL<<(j+2)))){
+                sm+=10;
+            }
+            // cout<<ways[sm]<<" ";
+           if(sm<0){
+            cnt = 0 ; 
+            break;
+           }
+            cnt*=ways[sm];
+        }
+        // cout<<endl;
+        ans+=cnt;
     }
-    else{
-        cout<<zero+1<<" "<<n<<" "<<zero+2<<" "<<n<<endl;
-    }
- }
-
+    cout<<ans-2<<endl;
 }
 int main(){
-    if(file)
+   pre();
+    if(file)    
       file_io();
     int t ;
     t = 1 ;

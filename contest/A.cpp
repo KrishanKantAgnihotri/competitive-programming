@@ -103,19 +103,24 @@ int dy[]={0,1,0,-1};
 bool test = true;
 bool file = true;
 void solve(){
-    ll l,r;
-    cin>>l>>r;
-    ll m  = r/2;
-    if(m<l) m = l;
-    if(m>r) m = r;
-
-    ll ans = r%m;
-    m++;
-    if(m<l) m = l;
-    if(m>r) m = r;
-    ans = max(ans,r%m);
-    cout<<ans<<endl;
-
+ll n;
+cin>>n;
+string s;
+cin>>s;
+for(int i = 0 ; i<n ;i++){
+    if(s[i] == 'L' || s[i] == 'R'){
+        cout<<s[i];
+    }
+    else{
+        if(s[i] == 'U'){
+            cout<<"D";
+        }
+        else{
+            cout<<"U";
+        }
+    }
+}
+cout<<"\n";
 }
 int main(){
     if(file)
