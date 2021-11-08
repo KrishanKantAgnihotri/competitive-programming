@@ -99,63 +99,68 @@ ll stoii(string s){
 //matrix stuff
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
-
+//fast_expo + MOD
+ll ipowM(ll base ,ll exp,ll MOD){
+    ll res = 1;
+    while(exp>0){
+        if(exp&1) res = (res*base)%MOD;
+        exp>>=1;
+        base = (base*base)%MOD;
+    }
+return res;
+}
+//INVERSE 
+ll invM(ll num ,ll m){
+    return ipowM(num,m-2,m);
+}
+//combi
+const long long int x = 2e5+2 ;
+ll fact[x+1];
+ll ifact[x+1];
+void prefact(ll MOD){
+    fact[0]=1;
+    ifact[0]=1;
+    for(ll i = 1 ;i<=x ;i++){
+        fact[i] = (fact[i-1]*i)%MOD;
+        ifact[i] = (ifact[i-1]*invM(i,MOD))%MOD;
+    }
+}
+ll add(ll a,ll b){
+    return (a+b+MOD)%MOD;
+}
+ll mul(ll a,ll b){
+    return (a*1LL*b)%MOD;
+}
+ll ncr(ll n,ll k){
+    if(k>n)
+        return 0;
+    return mul(fact[n],mul(ifact[n-k],ifact[k]))%MOD;
+}
 bool test = true;
 bool file = true;
-ll ways[20];
-void pre(){
-    for(int i = 0 ; i<20 ;i ++){
-        ways[i] = 0 ; 
-    }
-   
-    for(int i =  0 ; i<10 ;i++){
-        for(int j = 0 ;j<10 ;j++){
-            ways[i+j]++;
-        }
-    }
-    // for(int i = 0 ;i <19 ; i++) cout<<ways[i]<<" ";
-    //     cout<<endl;
-}
 void solve(){
-    string s;
-    cin>>s;
-    ll d[12]={0};
-    for(int i = 0 ; i<12;i++) d[i] = 0 ; 
-    reverse(all(s));
-    for(int i  = 0 ; i<12 ;i++){
-        if(i<s.length())
-          d[i] = s[i]-'0';
-        else
-        d[i] = 0 ;  
+    ll n;
+    cin>>n;
+    vl v(n);
+    scanv(v,n);
+    sort(rall(v));
+    ll ele = v[0];
+    ll sec = v[0]-1;
+    ll cnt = 0 ; 
+    for(int i = 0 ; i<n ;i++){
+        if(v[i] == sec)
+            cnt++;
     }
-    //brute force all carry 
-    ll ans = 0 ; 
-    for(ll i =0 ; i<(1<<12) ;i++){
-        if( (i&3)!=0) continue;
-        ll cnt = 1;
-        for(ll j  = 0 ;j<12;j++){
-            ll sm = d[j];
-            if(i&(1<<j)){
-                sm--;
-            }
-            if( (j<10) && (i&(1LL<<(j+2)))){
-                sm+=10;
-            }
-            // cout<<ways[sm]<<" ";
-           if(sm<0){
-            cnt = 0 ; 
-            break;
-           }
-            cnt*=ways[sm];
-        }
-        // cout<<endl;
-        ans+=cnt;
+    if(v[0] == v[1]){
+        cout<<fact[n]<<endl;
+        return ;
     }
-    cout<<ans-2<<endl;
+    ll ans = (fact[n]- (fact[n]*ipowM(cnt+1,MOD2-2,MOD2)%MOD2)%MOD2+MOD2)%MOD2;
+cout<<ans<<endl;
 }
 int main(){
-   pre();
-    if(file)    
+    prefact(MOD2);
+    if(file)
       file_io();
     int t ;
     t = 1 ;

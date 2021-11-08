@@ -103,19 +103,6 @@ int dy[]={0,1,0,-1};
 bool test = true;
 bool file = true;
 void solve(){
-	ll n,k;
-	cin>>n>>k;
-	while(k>1){
-		ll mx = 1e9;
-		while(n-mx<(k-1)){
-			mx/=10;
-
-		}
-		n-=mx;
-		k--;
-		cout<<mx<<" ";
-	}
-	cout<<n<<endl;
 
 }
 int main(){
