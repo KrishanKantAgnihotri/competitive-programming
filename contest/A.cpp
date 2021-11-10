@@ -103,25 +103,12 @@ int dy[]={0,1,0,-1};
 bool test = true;
 bool file = true;
 void solve(){
-    ll n;
-    cin>>n;
-    string s;
-    cin>>s;
-    for(int i = 0 ; i<n ;i ++){
-        for(int j = i+1 ;j<n ; j++){
-            ll a= 0 ; 
-            ll b = 0 ; 
-            for(int k = i ; k<=j ;k++){
-                if(s[k] == 'a') a++;
-                if(s[k] == 'b') b++;
-            }
-            if(a == b){
-                cout<<(i+1)<<" "<<(j+1)<<endl;
-                return ;
-            }
-        }
-    }
-    cout<<-1<<' '<<-1<<endl;
+    ll n,s;
+    cin>>n>>s;
+    ll p = (n+1)/2;
+    s-=max(0LL,min(p-1,s));
+    cout<<s<<endl;
+   // cout<<int((-1+sqrtl(1LL+8LL*s))/2)<<endl;
 
 }
 int main(){
