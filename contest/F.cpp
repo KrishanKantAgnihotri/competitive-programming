@@ -100,90 +100,65 @@ ll stoii(string s){
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
 
-bool test = false;
+bool test = true;
 bool file = true;
-ll mat[505][505];
-ll ans[505][505];
-ll n,m;
-struct p{
-	pair<int,int> s;
-}
-vector<pair<int,pair<p,p>>> edges;
-void dfs(ll x,ll y){
-	vis[x][y] = true;
-	for(auto child : edges){
-		ll t = child.ff;
-		pair<int,int> x = child.ss.ff.s;
-		pairt<int,int> y = child.ss.ss.s;
+ll ans ;
+const ll N = 2e5+2;
+vector<ll> adj[N];
+ll mark[N];
+bool vis[N];
+void dfs(ll u,ll v){
+	
+	bool ok = false;
+	vis[u] = true;
+	for(auto child : adj[u]){
+		if(vis[child]) continue;
+		if(child == v) continue;
+		dfs(child,u);
 		
-
-
+		if(mark[child] == 1) ok = true;
+	
 	}
+	if(!ok){
+		mark[u] = 1;
+	}
+	else 
+		mark[u] = 2;
 }
 void solve(){
-	cin>>n>>m;
-	
-	for(int i  = 1 i<=n ;i++){
-		for(int j =1 ;j<=m ;j++){
-			cin>>mat[i][j];
-			ans[i][j] = 0 ; 
-		}
+ll n;
+cin>>n;
+ll m = n-1;
+memset(vis,false,n+1);
+memset(mark,0,n+1);
+while(m--){
+	ll u,v;
+	cin>>u>>v;
+	adj[u].pb(v);
+	adj[v].pb(u);
+}
+ans = n ; 
+dfs(1,-1);
+mark[1] = 0 ; 
+for(int i = 1 ;i<=n ;i++){
+	if(mark[i] == 2) ans-=2;
+}
+for(auto child :adj[1]){
+	if(mark[child] == 1){
+		ans--;
+		break;
 	}
-	
-	for(int i = 1 ;i<=n ;i++){
-		for(int j = 1 ;j<=m ;j++){
-			if(mat[i][j] == '.') continue;
-			vector<pair<ll,ll>> pts;
-			for(int k = 0 ; k<4 ; k++){
-				int xx = dx[k]+i;
-				int yy = dy[k]+j;
-				if(xx<=n && yy<=m && xx>=1 && yy>=1 && mat[xx][yy]=='.')
-					pts.pb({xx,yy});
-			}
-			if(pts.size()%2 ==1){
-				cout<<"NO\n";
-				return ;
-			}
-			if(pts.size() == 0){
-				continue;
-			}
-			sort(all(pts));
-			if(pts.size() == 2){
-				p x = pts[0];
-				p y = pts[1]; 
-				edges.pb({1,{x,y}});
-				ans[i][j] = 5;
-			}
-			if(pts.size() == 4){
-				p x1 ;
-				p x2 ;
-				p y1 ;
-				p y2 ;
-				 x1.s = pts[0];
-				 x2.s = pts[1];
-				 y1.s = pts[2];
-				 y2.s = pts[3];
-				edges.pb({0,{x1,x2}});
-				edges.pb({0,{y1,y2}});
-				ans[i][j] = 10;
-			}
-		}
-	}
-	for(int i = 1 ;i<=n ;i++){
-		for(int j = 1 ;j<=m ;j++){
-			if(mat[i][j] == '.'){
-				if(!vis[i][j])
-				dfs(i,j);
-			}
-		}
-	}
-	for(int i = 1 ; i<=n ;i++){
-		for(int j = 1 ;j<=m ;j++){
-			cout<<ans[i][j]<<" ";
-		}
-		cout<<endl;
-	}
-
+}
+cout<<ans;
+cout<<endl;
+// for(int i = 1 ;i<=n; i++){
+// 	if(mark[i]) ans++;
+// 	else ans--;
+// }
+// cout<<ans<<endl;
+for(int i = 1 ;i<=n; i++){
+	adj[i].clear();
+}
 }
 int main(){
     if(file)

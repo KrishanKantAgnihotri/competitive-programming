@@ -103,6 +103,25 @@ int dy[]={0,1,0,-1};
 bool test = true;
 bool file = true;
 void solve(){
+	ll n,m;
+	cin>>n>>m;
+	pair<ll,ll> v[n*m];
+	for(int i = 0 ; i<n*m ;i++){
+		cin>>v[i].ff;
+		v[i].ss = i;
+	}
+	sort(v,v+n*m);
+	ll ans = 0 ; 
+	for(int i = 0 ; i<(n*m) ; i++){
+		for(int j = i-i%m ;j<i ;j++){
+			if(v[i].ff!=v[j].ff){
+				if(v[i].ss>v[j].ss){
+					ans++;
+				}
+			}
+		}
+	}
+	cout<<ans<<endl;
 
 }
 int main(){
@@ -118,5 +137,6 @@ int main(){
     }
     Time
 }
+
 
 

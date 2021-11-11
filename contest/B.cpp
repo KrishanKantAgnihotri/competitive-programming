@@ -103,49 +103,21 @@ int dy[]={0,1,0,-1};
 bool test = true;
 bool file = true;
 void solve(){
-    ll n;
-    cin>>n;
     string s;
     cin>>s;
-    char ans[n][n];
-    for(int i = 0 ; i<n ;i++){
-        for(int j = 0 ;j<n ;j++){
-            if(i == j) ans[i][j] = 'X';
-            else 
-                ans[i][j] = '=';
-        }
-    }
-    vector<int> one;
-    vector<int> two;
-    for(int i = 0 ; i<n ;i ++){
-        if(s[i] == '1') one.pb(i);
-        else 
-            two.pb(i);
-    }
+    ll ans = 0 ; 
+    ll last = -1 ;
 
-    if(two.size()<=2 && two.size()!=0){
-        cout<<"NO\n";
-        return ;
-    }
-    cout<<"YES\n";
-    if(two.size()){
-    for(int i = 1 ; i<two.size()-1  ; i++){
-        ans[two[0]][two[i]] = '-';
-        ans[two[i]][two[0]] = '+';
-    }
-   
-    ll j = two.size()-1;
-    ans[two[0]][two[j]] = '+';
-    ans[two[j]][two[0]] = '-';
-    ans[two[1]][two[j]] = '-';
-    ans[two[j]][two[1]] = '+';
-    }
-    for(int i = 0 ; i<n ;i++){
-        for(int j = 0  ; j<n ;j++){
-            cout<<ans[i][j];
+     ll mx = -1;
+    for(int i = 0 ; i<s.length() ;i++){
+        if((s[i]-'0')!=last){
+            last = s[i]-'0';
+            if(s[i] == '0') ans++;
         }
-        cout<<endl;
+        last = s[i] -'0';
+        mx = max(last,mx);
     }
+    cout<<min(ans,mx+1)<<endl;
 
 }
 int main(){

@@ -99,67 +99,44 @@ ll stoii(string s){
 //matrix stuff
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
-//fast_expo + MOD
-ll ipowM(ll base ,ll exp,ll MOD){
-    ll res = 1;
-    while(exp>0){
-        if(exp&1) res = (res*base)%MOD;
-        exp>>=1;
-        base = (base*base)%MOD;
-    }
-return res;
-}
-//INVERSE 
-ll invM(ll num ,ll m){
-    return ipowM(num,m-2,m);
-}
-//combi
-const long long int x = 2e5+2 ;
-ll fact[x+1];
-ll ifact[x+1];
-void prefact(ll MOD){
-    fact[0]=1;
-    ifact[0]=1;
-    for(ll i = 1 ;i<=x ;i++){
-        fact[i] = (fact[i-1]*i)%MOD;
-        ifact[i] = (ifact[i-1]*invM(i,MOD))%MOD;
-    }
-}
-ll add(ll a,ll b){
-    return (a+b+MOD)%MOD;
-}
-ll mul(ll a,ll b){
-    return (a*1LL*b)%MOD;
-}
-ll ncr(ll n,ll k){
-    if(k>n)
-        return 0;
-    return mul(fact[n],mul(ifact[n-k],ifact[k]))%MOD;
-}
+
 bool test = true;
 bool file = true;
 void solve(){
     ll n;
     cin>>n;
-    vl v(n);
-    scanv(v,n);
-    sort(rall(v));
-    ll ele = v[0];
-    ll sec = v[0]-1;
-    ll cnt = 0 ; 
-    for(int i = 0 ; i<n ;i++){
-        if(v[i] == sec)
-            cnt++;
+string a;
+string b;
+cin>>a>>b;
+
+ll ans = 0 ; 
+ll cur = -1;
+for(int i = 0 ;i<n ;i++){
+    int c = a[i]-'0';
+    int d = b[i]-'0';
+    if(c+d==0){
+        ans++;
     }
-    if(v[0] == v[1]){
-        cout<<fact[n]<<endl;
-        return ;
+    else if(c+d==1){
+        ans+=2;
     }
-    ll ans = (fact[n]- (fact[n]*ipowM(cnt+1,MOD2-2,MOD2)%MOD2)%MOD2+MOD2)%MOD2;
+}
+for(int i = 0 ; i<n ;i++){
+    int c = a[i]-'0';
+    int d = b[i]-'0';
+    if(c+d!=2) continue;
+    if(i>0 && (a[i-1]-'0')+(b[i-1]-'0')==0){
+        ans++;
+    }
+    else if(i+1<n && (a[i+1]-'0')+(b[i+1]-'0')==0){
+        ans++;
+        a[i+1] = '4';
+        b[i+1] = '4';
+    }
+}
 cout<<ans<<endl;
 }
 int main(){
-    prefact(MOD2);
     if(file)
       file_io();
     int t ;

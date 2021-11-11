@@ -103,12 +103,11 @@ int dy[]={0,1,0,-1};
 bool test = true;
 bool file = true;
 void solve(){
-    ll n,s;
-    cin>>n>>s;
-    ll p = (n+1)/2;
-    s-=max(0LL,min(p-1,s));
-    cout<<s<<endl;
-   // cout<<int((-1+sqrtl(1LL+8LL*s))/2)<<endl;
+    ll n;
+    cin>>n;
+    ll s;
+    cin>>s;
+    cout<<(s)/( (n/2) +1)<<endl;
 
 }
 int main(){
