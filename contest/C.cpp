@@ -99,42 +99,82 @@ ll stoii(string s){
 //matrix stuff
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
+const ll N = 2e5+1;
+bool mark[N];
+bool vis[N];
+bool ok;
+vector<ll> adj[N+1];
+
+void dfs(ll u){
+    if(mark[u]){
+        ok = true;
+        return ;
+    }
+    mark[u] = true;
+    for(auto child : adj[u]){
+        if(!vis[child]) dfs(child);
+       
+    }
+     mark[u] = false;
+     vis[u] = true;
+}
 
 bool test = true;
 bool file = true;
 void solve(){
     ll n;
     cin>>n;
-string a;
-string b;
-cin>>a>>b;
+    ll m =n-1  ; 
+    ll in[n+1];
+    for(int i = 0 ; i<n; i++){
+        ll k ;
+        cin>>k;
+        in[i+1] = k;
+        for(int j = 0 ; j<k ;j++ ){
+            int val;
+            cin>>val;
+            adj[val].pb(i+1);
+        }
+    }
+    for(int i =1;i<=n ;i++){
+        if(!vis[i]){
+            dfs(i);
+        }
+    }
+    if(ok){
+        cout<<"-1"<<endl;
+    }
+    else{
+        ll ans = 0 ; 
+        priority_queue<ll> cur,nxt;
+        for(int i = 1 ;i<=n ;i++){
+            if(in[i] == 0) cur.push(-i);
+        }
+        while(true){
+            if(cur.empty()) break;
 
-ll ans = 0 ; 
-ll cur = -1;
-for(int i = 0 ;i<n ;i++){
-    int c = a[i]-'0';
-    int d = b[i]-'0';
-    if(c+d==0){
-        ans++;
+            while(!cur.empty()){
+                ll u = -cur.top();
+                cur.pop();
+                for(auto child : adj[u]){
+                    in[child]--;
+                    if(in[child]>0) continue;
+                    if(child<u) nxt.push(-child);
+                    else 
+                        cur.push(-child);
+                }
+            }
+            swap(nxt,cur);
+            ans++;
+        }
+        cout<<ans<<endl;
     }
-    else if(c+d==1){
-        ans+=2;
+    ok = false;
+    for(int i = 1 ;i<=n ;i++){
+        adj[i].clear();
+        vis[i] = false;
+        mark[i] = false;
     }
-}
-for(int i = 0 ; i<n ;i++){
-    int c = a[i]-'0';
-    int d = b[i]-'0';
-    if(c+d!=2) continue;
-    if(i>0 && (a[i-1]-'0')+(b[i-1]-'0')==0){
-        ans++;
-    }
-    else if(i+1<n && (a[i+1]-'0')+(b[i+1]-'0')==0){
-        ans++;
-        a[i+1] = '4';
-        b[i+1] = '4';
-    }
-}
-cout<<ans<<endl;
 }
 int main(){
     if(file)

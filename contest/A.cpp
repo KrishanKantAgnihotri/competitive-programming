@@ -103,12 +103,21 @@ int dy[]={0,1,0,-1};
 bool test = true;
 bool file = true;
 void solve(){
-    ll n;
-    cin>>n;
-    ll s;
+    string s;
     cin>>s;
-    cout<<(s)/( (n/2) +1)<<endl;
+    string f;
+    cin>>f;
+    ll ans = 0 ; 
+    for(int i =  0 ;i <s.length() ;i++){
+        ll cnt = INF;
+        for(int j = 0 ; j<f.length() ;j++){
+            // cout<<abs(s[i]-f[j])<<endl;
+            cnt = min(cnt,1LL*min(abs(s[i]-f[j]),26-abs(s[i]-f[j])));
+        }
+        ans+=cnt;
 
+    }
+    cout<<ans<<endl;
 }
 int main(){
     if(file)
@@ -117,8 +126,11 @@ int main(){
     t = 1 ;
     if(test)
     cin>>t;
+    int i = 1 ; 
     while(t--){
-            solve();
+        GOOGLE(i);
+        solve();
+        i++;
 
     }
     Time

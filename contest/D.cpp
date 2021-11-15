@@ -103,26 +103,8 @@ int dy[]={0,1,0,-1};
 bool test = true;
 bool file = true;
 void solve(){
-	ll n,m;
-	cin>>n>>m;
-	vl v(m*n);
-	scanv(v,m*n);
-	int pos[m*n];
-	iota(pos,pos+n*m,0);
-	sort(pos,pos+n*m,[&](int i,int j){
-		if(v[i]!=v[j]){
-			return v[i]<v[j];
-		}
-		else 
-			return i>j;
-	});
-	ll ans = 0 ; 
-	for(int i = 0 ; i<m ;i++){
-		for(int j = i+1 ;j<m ;j++){
-			if(pos[i]<pos[j]) ans++;
-		}
-	}
-	cout<<ans<<endl;
+
+
 }
 int main(){
     if(file)
@@ -131,8 +113,11 @@ int main(){
     t = 1 ;
     if(test)
     cin>>t;
+    int i = 1 ; 
     while(t--){
-            solve();
+        GOOGLE(i);
+        solve();
+        i++;
 
     }
     Time

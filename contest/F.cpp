@@ -102,63 +102,9 @@ int dy[]={0,1,0,-1};
 
 bool test = true;
 bool file = true;
-ll ans ;
-const ll N = 2e5+2;
-vector<ll> adj[N];
-ll mark[N];
-bool vis[N];
-void dfs(ll u,ll v){
-	
-	bool ok = false;
-	vis[u] = true;
-	for(auto child : adj[u]){
-		if(vis[child]) continue;
-		if(child == v) continue;
-		dfs(child,u);
-		
-		if(mark[child] == 1) ok = true;
-	
-	}
-	if(!ok){
-		mark[u] = 1;
-	}
-	else 
-		mark[u] = 2;
-}
 void solve(){
-ll n;
-cin>>n;
-ll m = n-1;
-memset(vis,false,n+1);
-memset(mark,0,n+1);
-while(m--){
-	ll u,v;
-	cin>>u>>v;
-	adj[u].pb(v);
-	adj[v].pb(u);
-}
-ans = n ; 
-dfs(1,-1);
-mark[1] = 0 ; 
-for(int i = 1 ;i<=n ;i++){
-	if(mark[i] == 2) ans-=2;
-}
-for(auto child :adj[1]){
-	if(mark[child] == 1){
-		ans--;
-		break;
-	}
-}
-cout<<ans;
-cout<<endl;
-// for(int i = 1 ;i<=n; i++){
-// 	if(mark[i]) ans++;
-// 	else ans--;
-// }
-// cout<<ans<<endl;
-for(int i = 1 ;i<=n; i++){
-	adj[i].clear();
-}
+
+
 }
 int main(){
     if(file)
@@ -167,8 +113,11 @@ int main(){
     t = 1 ;
     if(test)
     cin>>t;
+    int i = 1 ; 
     while(t--){
-            solve();
+        GOOGLE(i);
+        solve();
+        i++;
 
     }
     Time

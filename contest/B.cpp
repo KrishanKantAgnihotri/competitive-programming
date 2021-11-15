@@ -103,22 +103,22 @@ int dy[]={0,1,0,-1};
 bool test = true;
 bool file = true;
 void solve(){
-    string s;
-    cin>>s;
-    ll ans = 0 ; 
-    ll last = -1 ;
-
-     ll mx = -1;
-    for(int i = 0 ; i<s.length() ;i++){
-        if((s[i]-'0')!=last){
-            last = s[i]-'0';
-            if(s[i] == '0') ans++;
-        }
-        last = s[i] -'0';
-        mx = max(last,mx);
+    ll n;
+    cin>>n;
+    vl a(n);
+    scanv(a,n);
+    vl b(n);
+    scanv(b,n);
+    ll p[n];
+    p[0] = b[0];
+    for(int i = 1 ;i<n; i++){
+        p[i] = max(p[i-1],b[i]);
     }
-    cout<<min(ans,mx+1)<<endl;
-
+    ll ans = INF;
+    for(int i = 0 ;i <n ;i++){
+        ans = min(ans,lower_bound(p,p+n,a[i])-p+i*1LL);
+    }
+    cout<<ans<<endl;
 }
 int main(){
     if(file)
