@@ -100,24 +100,48 @@ ll stoii(string s){
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
 
-bool test = true;
+bool test = false;
 bool file = true;
 void solve(){
-    string s;
-    cin>>s;
-    string f;
-    cin>>f;
-    ll ans = 0 ; 
-    for(int i =  0 ;i <s.length() ;i++){
-        ll cnt = INF;
-        for(int j = 0 ; j<f.length() ;j++){
-            // cout<<abs(s[i]-f[j])<<endl;
-            cnt = min(cnt,1LL*min(abs(s[i]-f[j]),26-abs(s[i]-f[j])));
-        }
-        ans+=cnt;
+    string a,b;
+    cin>>a>>b;
+    ll n = a.length();
+    for(int i = 0 ; i<n ;i++){
+        if(a[i] == '#'){
+            if(i+1<n && a[i+1] == '#'){
 
+            }
+            else if(i-1<=0 && a[i-1]=='#'){
+
+            }
+            else if(b[i]=='#'){
+
+            }
+            else{
+                cout<<"No\n";
+                return ;
+            }
+        }
     }
-    cout<<ans<<endl;
+    swap(a,b);
+    for(int i = 0 ; i<n ;i++){
+        if(a[i] == '#'){
+            if(i+1<n && a[i+1] == '#'){
+
+            }
+            else if(i-1<=0 && a[i-1]=='#'){
+
+            }
+            else if(b[i]=='#'){
+
+            }
+            else{
+                cout<<"No\n";
+                return ;
+            }
+        }
+    }
+    cout<<"Yes\n";
 }
 int main(){
     if(file)
@@ -126,11 +150,8 @@ int main(){
     t = 1 ;
     if(test)
     cin>>t;
-    int i = 1 ; 
     while(t--){
-        GOOGLE(i);
-        solve();
-        i++;
+            solve();
 
     }
     Time

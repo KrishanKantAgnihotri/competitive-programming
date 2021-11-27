@@ -100,25 +100,30 @@ ll stoii(string s){
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
 
-bool test = true;
+bool test = false;
 bool file = true;
 void solve(){
-    ll n;
-    cin>>n;
-    vl a(n);
-    scanv(a,n);
-    vl b(n);
-    scanv(b,n);
-    ll p[n];
-    p[0] = b[0];
-    for(int i = 1 ;i<n; i++){
-        p[i] = max(p[i-1],b[i]);
+    string a,b;
+    cin>>a>>b;
+    ll n = a.length();
+    ll m = b.length();
+    if(n>m){
+        swap(a,b);
+        swap(n,m);
     }
-    ll ans = INF;
-    for(int i = 0 ;i <n ;i++){
-        ans = min(ans,lower_bound(p,p+n,a[i])-p+i*1LL);
+    ll i = n-1;
+    ll j = m-1;
+    while(i>=0 && j>=0){
+        ll one = a[i]-'0';
+        ll two = b[j] -'0';
+        if(one+two>=10){
+            cout<<"Hard";
+            return ;
+        }
+        i--;
+        j--;
     }
-    cout<<ans<<endl;
+    cout<<"Easy";
 }
 int main(){
     if(file)

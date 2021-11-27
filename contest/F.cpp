@@ -100,11 +100,15 @@ ll stoii(string s){
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
 
-bool test = true;
+bool test = false;
 bool file = true;
 void solve(){
-
-
+ll n;
+cin>>n;
+ vl a(n);
+ scanv(a,n);
+ vl b(n);
+ scanv(b,n);
 }
 int main(){
     if(file)
@@ -113,11 +117,8 @@ int main(){
     t = 1 ;
     if(test)
     cin>>t;
-    int i = 1 ; 
     while(t--){
-        GOOGLE(i);
-        solve();
-        i++;
+            solve();
 
     }
     Time

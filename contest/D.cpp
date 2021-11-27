@@ -100,11 +100,29 @@ ll stoii(string s){
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
 
-bool test = true;
+bool test = false;
 bool file = true;
 void solve(){
-
-
+	string s;
+	cin>>s;
+	ll n;
+	n = s.length();
+	ll k;
+	cin>>k;
+	ll ans = 0 ; 
+	ll cntx = 0 ; 
+	ll cnty = 0 ;
+	ll l = 0 ;  
+	for(int i = 0 ;i <n ;i++){
+		if(s[i] == '.')
+			cnty++;
+			while(cnty>k){
+				if(s[l] == '.') cnty--;
+				l++;
+			}
+			ans = max(ans,i-l+1);
+		}
+	cout<<ans<<endl;
 }
 int main(){
     if(file)
@@ -113,11 +131,8 @@ int main(){
     t = 1 ;
     if(test)
     cin>>t;
-    int i = 1 ; 
     while(t--){
-        GOOGLE(i);
-        solve();
-        i++;
+            solve();
 
     }
     Time
