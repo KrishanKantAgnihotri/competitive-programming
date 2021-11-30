@@ -102,28 +102,64 @@ int dy[]={0,1,0,-1};
 
 bool test = false;
 bool file = true;
+const ll N = 1e4;
+vector<ll> rnk(N+1,0);
+vector<ll> par(N,0);
+vector<ll> mx(N,INT_MIN);
+vector<ll> mn(N,INT_MAX);
+vector<ll> sz(N,1);
+ll fnd(ll a){
+    if(par[a]==a)
+        return par[a];
+    return par[a] = fnd(par[a]);
+}
+ll merge(ll a,ll b){
+//merge smaller into bigger
+a = fnd(a);
+b = fnd(b);
+if(sz[a]>sz[b])
+    swap(a,b);
+par[a]=b;
+mn[b]=min(mn[a],mn[b]);
+mx[b]=max(mx[a],mx[b]);
+
+sz[b]+=(sz[a]);
+
+}
 void solve(){
-    string a,b;
-    cin>>a>>b;
-    ll n = a.length();
-    ll m = b.length();
-    if(n>m){
-        swap(a,b);
-        swap(n,m);
+    ll n;
+    cin>>n;
+    ll d;
+    cin>>d;
+    for(int i = 1 ;i<=n; i++){
+        par[i] = i;
+        sz[i] = 1 ; 
     }
-    ll i = n-1;
-    ll j = m-1;
-    while(i>=0 && j>=0){
-        ll one = a[i]-'0';
-        ll two = b[j] -'0';
-        if(one+two>=10){
-            cout<<"Hard";
-            return ;
+    ll cnt = 0 ; 
+    while(d--){
+        ll u,v;
+        cin>>u>>v;
+
+        if(fnd(u) == fnd(v)){
+            cnt++;
         }
-        i--;
-        j--;
+        else{
+            merge(u,v);
+        }
+        ll ans = 0 ;
+        vl cc; 
+        for(int i = 1 ;i<=n ;i++){
+            if(par[i] == i ){
+                cc.pb(sz[i]);
+            }
+        }
+        sort(rall(cc));
+        for(int i = 0 ; i<=cnt ;i ++){
+            ans+=cc[i];
+        }
+        cout<<ans-1<<endl;
     }
-    cout<<"Easy";
+
 }
 int main(){
     if(file)

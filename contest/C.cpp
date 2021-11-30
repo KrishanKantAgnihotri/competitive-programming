@@ -99,33 +99,55 @@ ll stoii(string s){
 //matrix stuff
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
-
-bool test = false;
+vector<int> primes;
+const ll x = 1e6+1;
+vector<bool>  isprime(x,true);
+void sieve(){
+isprime[1] = false;
+for(ll i = 2 ;i*i<=x ;i++){
+    if(isprime[i]){
+   //primes.pb(i);
+    for(ll j = i*i ;j<=x;j+=i){
+        isprime[j] = false;
+    }
+}
+}
+// for(int i = 2 ;i<=x ;i++){
+//     if(isprime[i])
+//     primes.pb(i);
+// }
+}   
+bool test = true;
 bool file = true;
 void solve(){
-    ll n;
+    ll n,e;
     cin>>n;
-    ll w;
-    cin>>w;
-    vector<pair<ll,ll>> v(n);
-    for(int i = 0 ; i<n ;i++){
-        cin>>v[i].ff>>v[i].ss;
-    }
+    cin>>e;
     ll ans = 0 ; 
-    sort(rall(v));
+    map<ll,ll> m;
+    map<ll,ll> m2;
+    vl v(n);
+    scanv(v,n);
+    ll one = 0 ; 
     for(int i = 0 ; i<n ;i++){
-        if(w<=0){
-            break;
+        if(v[i] == 1){
+            if(m.count(i%e)){
+                ans+=m[i%e];
+            }
+             m2[i%e]++;
+             one++;
         }
-        ll take = min(w,v[i].ss);
-        w-=take;
-        ans+=(take*v[i].ff);
-    }
+        else if(isprime[v[i]]){
+            if(m2.count(i%e)){
+                ans+=m2[i%e];
+            }
+            m[i%e]++;
+        }
+    }    
     cout<<ans<<endl;
-
-
 }
 int main(){
+    sieve();
     if(file)
       file_io();
     int t ;

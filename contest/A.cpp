@@ -100,50 +100,85 @@ ll stoii(string s){
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
 
-bool test = false;
+vector<int> primes;
+const ll x = 1e6+1;
+vector<bool>  isprime(x,true);
+void sieve(){
+isprime[1] = false;
+for(ll i = 2 ;i*i<=x ;i++){
+    if(isprime[i]){
+   //primes.pb(i);
+    for(ll j = i*i ;j<=x;j+=i){
+        isprime[j] = false;
+    }
+}
+}
+for(int i = 2 ;i<=x ;i++){
+    if(isprime[i])
+    primes.pb(i);
+}
+}
+//fast_expo + MOD
+ll ipowM(ll base ,ll exp,ll MOD){
+    ll res = 1;
+    while(exp>0){
+        if(exp&1) res = (res*base)%MOD;
+        exp>>=1;
+        base = (base*base)%MOD;
+    }
+return res;
+}
+//simple power
+ll ipow(ll base ,ll exp){
+    ll res = 1;
+    while(exp>0){
+        if(exp&1) res = (res*base);
+        exp>>=1;
+        base = (base*base);
+    }
+return res;
+}
+bool test = true;
 bool file = true;
 void solve(){
-    string a,b;
-    cin>>a>>b;
-    ll n = a.length();
-    for(int i = 0 ; i<n ;i++){
-        if(a[i] == '#'){
-            if(i+1<n && a[i+1] == '#'){
-
-            }
-            else if(i-1<=0 && a[i-1]=='#'){
-
-            }
-            else if(b[i]=='#'){
-
-            }
-            else{
-                cout<<"No\n";
-                return ;
-            }
+    ll n;
+    cin>>n;
+    ll e;
+    cin>>e;
+    vl v(n);
+    scanv(v,n);
+    pair<pair<ll,ll>,ll> a[e];
+    for(int i = 0 ;i<e ;i++){
+        a[i].ff.ff = 0 ;
+        a[i].ff.ss = 0 ;  
+        a[i].ss = 0; 
+    }
+    ll ans = 0 ; 
+    for(int i = 0 ; i<n; i++){
+        ll j = i%e;
+       if(v[i] == 1){
+        if(a[j].ss == 1)
+            ans+=(a[j].ff.ss+1);
+        a[j].ff.ff++;
+        }
+       else if(isprime[v[i]]){
+        
+        a[j].ss = 1;
+        ans+=a[j].ff.ff;
+        a[j].ff.ss=a[j].ff.ff;
+        a[j].ff.ff = 0 ; 
+        
+        }
+        else{
+             a[j].ff.ff = 0 ; 
+             a[j].ss = 0 ; 
         }
     }
-    swap(a,b);
-    for(int i = 0 ; i<n ;i++){
-        if(a[i] == '#'){
-            if(i+1<n && a[i+1] == '#'){
-
-            }
-            else if(i-1<=0 && a[i-1]=='#'){
-
-            }
-            else if(b[i]=='#'){
-
-            }
-            else{
-                cout<<"No\n";
-                return ;
-            }
-        }
-    }
-    cout<<"Yes\n";
+    
+    cout<<ans<<endl;
 }
 int main(){
+    sieve();
     if(file)
       file_io();
     int t ;
