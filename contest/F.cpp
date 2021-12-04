@@ -103,12 +103,7 @@ int dy[]={0,1,0,-1};
 bool test = false;
 bool file = true;
 void solve(){
-ll n;
-cin>>n;
- vl a(n);
- scanv(a,n);
- vl b(n);
- scanv(b,n);
+
 }
 int main(){
     if(file)
