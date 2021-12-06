@@ -91,7 +91,7 @@ ll stoii(string s){
     ll ans = 0;
     for(auto it: s){
         ll cur = it-'0';
-        ans = ans*10+cur;
+        ans = ans*10LL+cur;
     }
     return ans;
 }
@@ -103,20 +103,26 @@ int dy[]={0,1,0,-1};
 bool test = false;
 bool file = true;
 void solve(){
-
-ll n;
-cin>>n;
-if(n>=10){
-    if(n>=42){
-        n++;
-     
+    string a,b;
+    cin>>a>>b;
+    ll one = stoii(a);
+    ll two = stoii(b);
+    if(b == "1"){
+        a = "9"+a;
+        cout<<a<<endl;
+        return ;
     }
-       cout<<"AGC0"<<n;
+    if(two&1){
+       b+="2";
+       two = stoii(b);      
+    }
+    two/=2;
+    a+=(to_string(two));
+    cout<<a<<endl;
+    ll sol = stoii(a);
+    sol*=2LL;
+    // cout<<sol<<endl;
 
-}
-else {
-    cout<<"AGC00"<<n;
-}
 }
 int main(){
     if(file)

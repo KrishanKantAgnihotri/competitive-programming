@@ -28,7 +28,7 @@ template<class T> using oset =tree<T, null_type, less<T>, rb_tree_tag,tree_order
 //macros
 #define ull unsigned long long int
 #define ll long long
-#define ii pair<int,int>
+// #define ii pair<int,int>
 #define vii vector<ii>
 #define vi vector<int>
 #define vl vector<ll>
@@ -103,32 +103,42 @@ int dy[]={0,1,0,-1};
 bool test = false;
 bool file = true;
 void solve(){
-    string t = "oxxoxx";
-    bool ok = false;
-    ll m = t.length();
-    string s;
-    cin>>s;
-    ll n = s.length();
-    for(int i = 0 ; i<t.length() ;i ++){
-        int tr = 0 ;
-        bool ma = true; 
-        for(int j = 0 ; j<s.length();j++){
-            if(t[(i+j)%m]!=s[j]){
-                ma = false;
-                break;
+    ll n,m;
+    cin>>n>>m;
+    char arr[n+1][m+1];
+    for(int i = 0 ; i<n ;i++){
+        for(int j = 0 ;j<m; j++){
+            cin>>arr[i][j];
+        }
+    }
+    for(int i =0 ; i<n ;i++){
+        for(int j = 0 ;j<m ;j++){
+            if(arr[i][j] == '.'){
+                vector<bool> vis(6,false);
+                for(int k = 0 ; k<4 ;k++){
+                    int ii = i+dx[k];
+                    int jj = j+dy[k];
+
+                    if( (ii<n) && (jj<m) && (ii>=0) && (jj>=0) && (arr[ii][jj] != '.')){
+                         // cout<<ii<<" "<<jj<<endl;
+                        vis[arr[ii][jj]-'0'] = true;
+
+                    }
+                }
+                for(int k = 1 ;k<=5 ;k++){
+                    if(vis[k] == false){
+                        cout<<k;
+                    arr[i][j] = char(k+'0');
+                        break;
+                    }
+                }
+
+            }
+            else {
+                cout<<arr[i][j];
             }
         }
-        if(ma){
-            ok = true;
-            break;
-        }
-
-    }
-    if(ok){
-        cout<<"Yes\n";
-    }
-    else{
-        cout<<"No\n";
+        cout<<endl;
     }
 }
 int main(){

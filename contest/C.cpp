@@ -103,24 +103,29 @@ int dy[]={0,1,0,-1};
 bool test = false;
 bool file = true;
 void solve(){
-ll n,a,b;
-cin>>n>>a>>b;
-ll p,q,r,s;
-cin>>p>>q>>r>>s;
-for(ll i = p; i<=q ;i++){
-    for(ll j = r ; j<=s ; j++){
-        if(i +j == a+b){
-            cout<<"#";
-        }
-        else if( i+b == a+j){
-            cout<<"#";
-        }
-        else {
-            cout<<".";
-        }
+    ll n ;
+    cin>>n;
+    vl v(n);
+    scanv(v,n);
+    ll x = 0;
+    for(int i = 0 ;i <n ;i++){
+        x^=v[i];
     }
-    cout<<endl;
-}
+    if(n&1){
+       
+        cout<<"Win\n";
+    }
+    else{
+        for(int i = 0 ;i <n; i++){
+            if(v[i] == x) {
+                cout<<"Win\n";
+                return ;
+            }
+        }
+
+        cout<<"Lose\n";
+    }
+
 }
 int main(){
     if(file)
