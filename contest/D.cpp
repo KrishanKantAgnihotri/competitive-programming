@@ -100,32 +100,13 @@ ll stoii(string s){
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
 
-bool cmp(pair<ll,ll> p1,pair<ll,ll> p2){
-	 if(p1.second == p2.second){
-	 	return p1.first<p2.first;
-	 }
-	 return p1.second<p2.second;
-}
-bool test = false;
+bool test = true;
 bool file = true;
 void solve(){
-
-ll n,d;
-cin>>n>>d;
-vector<pair<ll,ll>> v(n);
-for(int i = 0 ; i<n ;i++){
-	cin>>v[i].ff>>v[i].ss;
-}
-sort(all(v),cmp);
-ll last = -1 ; 
-ll ans = 0 ; 
-for(int i = 0 ;i<n ;i++){
-	if(v[i].first>last){
-		last = v[i].second+d-1;
-		ans++;
-	}
-}
-cout<<ans<<endl;
+	ll n;
+	cin>>n;
+	vl v(n);
+	scanv(v,n);
 }
 int main(){
     if(file)

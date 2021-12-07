@@ -99,33 +99,46 @@ ll stoii(string s){
 //matrix stuff
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
+bool ok(vl &v,ll m,ll h){
+        ll ans = 0 ; 
+        ll l = 0 ; 
+        ll n = v.size();
+        for(int i = 0 ;i<n ;i++){
+            if(l<v[i]){
+                l = v[i]+m-1;
+                ans+=m;
+            }
+            else {
+                ll nl = max(l,v[i]+m-1);
+                ans+=(nl-l);
+                l = nl;
+            }
 
-bool test = false;
+        }
+    return ans>=h;
+    }
+
+bool test = true;
 bool file = true;
 void solve(){
-    ll n ;
-    cin>>n;
-    vl v(n);
-    scanv(v,n);
-    ll x = 0;
-    for(int i = 0 ;i <n ;i++){
-        x^=v[i];
-    }
-    if(n&1){
-       
-        cout<<"Win\n";
-    }
-    else{
-        for(int i = 0 ;i <n; i++){
-            if(v[i] == x) {
-                cout<<"Win\n";
-                return ;
+    ll n,h;
+    cin>>n>>h;
+        ll l = 1;
+        vector<ll> v(n);
+        scanv(v,n); 
+        ll r = 1e18 ;
+        ll ans = -1 ; 
+        while(l<=r){
+            ll mid = (l+r)/2LL;
+            if(ok(v,mid,h)){
+                ans = mid;
+                r = mid-1 ; 
+            }
+            else{
+                l = mid+1;
             }
         }
-
-        cout<<"Lose\n";
-    }
-
+        cout<<ans<<endl;
 }
 int main(){
     if(file)

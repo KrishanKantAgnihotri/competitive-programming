@@ -91,7 +91,7 @@ ll stoii(string s){
     ll ans = 0;
     for(auto it: s){
         ll cur = it-'0';
-        ans = ans*10LL+cur;
+        ans = ans*10+cur;
     }
     return ans;
 }
@@ -99,30 +99,70 @@ ll stoii(string s){
 //matrix stuff
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
-
-bool test = false;
+ll len(ll n){
+    ll cnt = 0 ; 
+    while(n){
+        n/=10;
+        cnt++;
+    }
+    return cnt;
+}
+bool test = true;
 bool file = true;
 void solve(){
-    string a,b;
-    cin>>a>>b;
-    ll one = stoii(a);
-    ll two = stoii(b);
-    if(b == "1"){
-        a = "9"+a;
-        cout<<a<<endl;
-        return ;
+    ll a,b,c,d;
+    cin>>a>>b>>c>>d;
+    ll x = len(a);
+    ll y = len(c);
+    ll tot1 = len(a)+b;
+    ll tot2 = len(c)+d;
+    if(tot1>tot2){
+        cout<<">"<<endl;
     }
-    if(two&1){
-       b+="2";
-       two = stoii(b);      
+    else if(tot1<tot2){
+        cout<<"<"<<endl;
     }
-    two/=2;
-    a+=(to_string(two));
-    cout<<a<<endl;
-    ll sol = stoii(a);
-    sol*=2LL;
-    // cout<<sol<<endl;
-
+    else {
+        // cout<<a<<" "<<b<<" "<<c<<" "<<d<<endl;
+        // cout<<x<<" "<<y<<endl;
+        bool ok = true;
+        if(x>y){
+            ok = false;
+            swap(b,d);
+            swap(x,y);
+            swap(a,c);
+            swap(tot1,tot2);
+        }
+        while( (x!=y) && (b>0)){
+            b--;
+            x++;
+            a*=10;
+        }
+         // cout<<a<<" "<<b<<" "<<c<<" "<<d<<endl;
+        if(ok){
+        if(a>c){
+            cout<<">"<<endl;
+        }
+        else if(c>a){
+            cout<<"<"<<endl;
+        }
+        else{
+            cout<<"="<<endl;
+        }
+        }
+        else{
+            if(a<c){
+            cout<<">"<<endl;
+            }
+            else if(c<a){
+             cout<<"<"<<endl;
+            }
+            else{
+               cout<<"="<<endl;
+            }
+ 
+        }
+    }
 }
 int main(){
     if(file)

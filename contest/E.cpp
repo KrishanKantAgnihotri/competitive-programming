@@ -96,23 +96,71 @@ ll stoii(string s){
     return ans;
 }
 
+vector<vector<char>> mat;
+vector<vector<bool>> vis;
+vector<vector<char>> ans;
+ll n,m;
 //matrix stuffb
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
+void dfs(ll x,ll y){
+	ll cnt = 0 ; 
+	for(int k = 0 ; k<4 ;k++){
+		ll xx = dx[k]+x;
+		ll yy = dy[k]+y;
+		if(xx>=0 && yy>=0 && xx<n && yy<m && (vis[xx][yy] == false) && (mat[xx][yy] != '#')){
+			cnt++;
+		}
+	}
+	if(cnt<=1){
+		ans[x][y] = '+';
+		vis[x][y] = true;
+		for(int k = 0 ; k<4 ;k++){
+		ll xx = dx[k]+x;
+		ll yy = dy[k]+y;
+		if(xx>=0 && yy>=0 && xx<n && yy<m && (vis[xx][yy] == false) && (mat[xx][yy] != '#')){
+			dfs(xx,yy);
+		}
+	}
 
-bool test = false;
+	}
+}
+bool test = true;
 bool file = true;
 void solve(){
-	ll n;
-	cin>>n;
-	ll ans = 0 ; 
-	for(ll i = 1 ;i*i<=n ;i++){
-		ans+=n/i;
-	} 
-	ll val = sqrtl(n);
-	ans*=2LL;
-	ans-=(val*val);
-	cout<<ans<<endl;
+
+	cin>>n>>m;
+	ll lx = -1 ;
+	ll ly = -1;
+	mat.assign(n+1,vector<char>(m+1));
+	vis.assign(n+1,vector<bool>(m+1));
+	ans.assign(n+1,vector<char>(m+1));
+	for(int i = 0 ; i<n;i++){
+		for(int j = 0 ;j<m ;j++){
+			cin>>mat[i][j];
+			vis[i][j] = false;
+			ans[i][j] = mat[i][j];
+			if(mat[i][j] == 'L'){
+				lx = i  ,ly = j;
+				vis[lx][ly] = true;
+
+			}
+		}
+	}
+	for(int k = 0 ; k<4 ;k++){
+		ll x = dx[k]+lx;
+		ll y = dy[k]+ly;
+		if(x>=0 && y>=0 && x<n && y<m && (vis[x][y] == false) && (mat[x][y] != '#') ){
+			dfs(x,y);
+		}
+	}
+	for(int i = 0 ;i <n ;i++){
+		for(int j = 0 ; j<m ;j++){
+			cout<<ans[i][j];
+		}
+		cout<<endl;
+	}
+
 
 }
 int main(){
