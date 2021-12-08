@@ -99,70 +99,27 @@ ll stoii(string s){
 //matrix stuff
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
-ll len(ll n){
-    ll cnt = 0 ; 
-    while(n){
-        n/=10;
-        cnt++;
-    }
-    return cnt;
-}
+
 bool test = true;
 bool file = true;
 void solve(){
-    ll a,b,c,d;
-    cin>>a>>b>>c>>d;
-    ll x = len(a);
-    ll y = len(c);
-    ll tot1 = len(a)+b;
-    ll tot2 = len(c)+d;
-    if(tot1>tot2){
-        cout<<">"<<endl;
-    }
-    else if(tot1<tot2){
-        cout<<"<"<<endl;
-    }
-    else {
-        // cout<<a<<" "<<b<<" "<<c<<" "<<d<<endl;
-        // cout<<x<<" "<<y<<endl;
-        bool ok = true;
-        if(x>y){
-            ok = false;
-            swap(b,d);
-            swap(x,y);
-            swap(a,c);
-            swap(tot1,tot2);
+    ll n,l,r,k;
+    cin>>n>>l>>r>>k;
+    vl v(n);
+    scanv(v,n);
+    sort(all(v));
+    ll ans =0 ; 
+    for(int i = 0 ; i<n ;i++){
+        if(k<v[i]){
+            break;
         }
-        while( (x!=y) && (b>0)){
-            b--;
-            x++;
-            a*=10;
-        }
-         // cout<<a<<" "<<b<<" "<<c<<" "<<d<<endl;
-        if(ok){
-        if(a>c){
-            cout<<">"<<endl;
-        }
-        else if(c>a){
-            cout<<"<"<<endl;
-        }
-        else{
-            cout<<"="<<endl;
-        }
-        }
-        else{
-            if(a<c){
-            cout<<">"<<endl;
-            }
-            else if(c<a){
-             cout<<"<"<<endl;
-            }
-            else{
-               cout<<"="<<endl;
-            }
- 
+        if(v[i]>=l && v[i]<=r){
+            ans++;
+            k-=v[i];
         }
     }
+    cout<<ans<<endl;
+
 }
 int main(){
     if(file)

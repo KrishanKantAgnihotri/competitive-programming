@@ -99,14 +99,33 @@ ll stoii(string s){
 //matrix stuff
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
-
-bool test = true;
+const ll N = 5e6+2;
+bool test = false;
 bool file = true;
 void solve(){
 	ll n;
 	cin>>n;
 	vl v(n);
 	scanv(v,n);
+	vector<ll> cnt(N);
+	for(int i =0 ;i <n ;i++ )cnt[v[i]]++;
+	vector<ll> dp(N);
+	for(ll i = 1 ; i<N ;i++){
+		for(ll j = 2*i ;j<N ;j+=i){
+			cnt[i]+=cnt[j];
+		}
+	}
+	for(ll i = N-1 ;i>=1 ;i--){
+		dp[i] = i*cnt[i];
+		for(ll j = i ;j<N ; j+=i){
+			dp[i] = max(dp[i],dp[j]+(cnt[i]-cnt[j])*i);
+		}
+	}
+	ll fans = 0 ; 
+	for(int i = 1 ;i<N ;i++){
+		fans = max(fans,dp[i]);
+	}
+	cout<<fans<<endl;
 }
 int main(){
     if(file)

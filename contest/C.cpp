@@ -99,46 +99,33 @@ ll stoii(string s){
 //matrix stuff
 int dx[]={-1,0,1,0};
 int dy[]={0,1,0,-1};
-bool ok(vl &v,ll m,ll h){
-        ll ans = 0 ; 
-        ll l = 0 ; 
-        ll n = v.size();
-        for(int i = 0 ;i<n ;i++){
-            if(l<v[i]){
-                l = v[i]+m-1;
-                ans+=m;
-            }
-            else {
-                ll nl = max(l,v[i]+m-1);
-                ans+=(nl-l);
-                l = nl;
-            }
-
-        }
-    return ans>=h;
+//fast_expo + MOD
+ll ipowM(ll base ,ll exp,ll MOD){
+    ll res = 1;
+    while(exp>0){
+        if(exp&1) res = (res*base)%MOD;
+        exp>>=1;
+        base = (base*base)%MOD;
     }
+return res;
+}
 
 bool test = true;
 bool file = true;
 void solve(){
-    ll n,h;
-    cin>>n>>h;
-        ll l = 1;
-        vector<ll> v(n);
-        scanv(v,n); 
-        ll r = 1e18 ;
-        ll ans = -1 ; 
-        while(l<=r){
-            ll mid = (l+r)/2LL;
-            if(ok(v,mid,h)){
-                ans = mid;
-                r = mid-1 ; 
-            }
-            else{
-                l = mid+1;
-            }
-        }
-        cout<<ans<<endl;
+    ll n,m;
+    cin>>n>>m;
+    ll o = 0 ; 
+    while(m--){
+        ll l,r;
+        cin>>l>>r;
+        ll x;
+        cin>>x;
+        o|=x;
+    }
+    ll ans = (o*(ipowM(2,n-1,MOD)))%MOD;
+    cout<<ans<<endl;
+
 }
 int main(){
     if(file)
@@ -153,5 +140,6 @@ int main(){
     }
     Time
 }
+
 
 

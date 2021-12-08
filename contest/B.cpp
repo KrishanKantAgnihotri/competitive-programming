@@ -103,21 +103,34 @@ int dy[]={0,1,0,-1};
 bool test = true;
 bool file = true;
 void solve(){
-    ll n;
+      ll n;
     cin>>n;
-
-    vl v(n);
-    scanv(v,n);
-    sort(all(v));
-    ll cnt = n/2;
-    for(int i = 1;i<=cnt ;i++){
-        if(v[i] == v[0]) {
-            cnt++;
-            continue;
-        }
-        cout<<v[i]<<" "<<v[0]<<endl;
-
+    vector<pair<int,int>> v(n);
+    for(int i = 0 ;i<n ;i++){
+        cin>>v[i].ff;
+        v[i].ss = i ;
     }
+    sort(rall(v));
+    ll fans = 0 ; 
+    vl ans(n+1);
+    ans[0] = 0 ;
+    ll k = 1; 
+    for(int i = 0 ;i<n ;i++){
+        fans+=(2*(abs(k)*v[i].ff));
+        if(i%2==0)
+        ans[v[i].ss+1] = k;
+    else {
+        k*=-1;
+        ans[v[i].ss+1] = k;
+        k*=-1;
+        k++;
+    }
+    }
+    cout<<fans<<endl;
+    for(int i = 0 ; i<=n ;i++){
+        cout<<ans[i]<<" ";
+    }
+    cout<<endl;
 }
 int main(){
     if(file)
