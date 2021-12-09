@@ -103,22 +103,37 @@ int dy[]={0,1,0,-1};
 bool test = true;
 bool file = true;
 void solve(){
-    ll n,l,r,k;
-    cin>>n>>l>>r>>k;
-    vl v(n);
-    scanv(v,n);
-    sort(all(v));
-    ll ans =0 ; 
-    for(int i = 0 ; i<n ;i++){
-        if(k<v[i]){
-            break;
-        }
-        if(v[i]>=l && v[i]<=r){
-            ans++;
-            k-=v[i];
-        }
+    ll n;
+    cin>>n;
+    if(n%2 == 0){
+        cout<<0<<endl;
+        return ;
     }
-    cout<<ans<<endl;
+    else{
+        string s = to_string(n);
+        ll d = s[0]-'0';
+        if(d%2 == 0){
+            cout<<1<<endl;
+            return ;
+        }
+        ll m = n;
+        bool ok = false;
+        while(m){
+            d = m%10;
+            if(d%2 == 0){
+                ok = true;
+                break;
+            }
+            m/=10;
+
+        }
+        if(ok){
+            cout<<2<<endl;
+        }
+        else
+            cout<<-1<<endl;
+
+    }
 
 }
 int main(){

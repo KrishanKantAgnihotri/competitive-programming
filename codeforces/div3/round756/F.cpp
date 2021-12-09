@@ -1,4 +1,5 @@
 //Author : Krishan Kant Agnihotri        
+//Actually F
 #include<bits/stdc++.h>
 using namespace std;
 #include <ext/pb_ds/assoc_container.hpp>
@@ -103,45 +104,47 @@ int dy[]={0,1,0,-1};
 bool test = true;
 bool file = true;
 void solve(){
-	ll n;
-	cin>>n;
-	vector<ll> b(n+1);
-	scanv(b,n);
-	vector<ll> p(n+1);
-	scanv(p,n);
-	vector<ll> mark(n+1);
-	for(int i = 0 ;i <n ;i++){
-		p[i]--;
-		mark[p[i]] = i;
-	}
-	bool ok = true;
+	ll n,s;
+	cin>>n>>s;
+	vl v(n);
+	scanv(v,n);
+	queue<ll> q;
+	ll ans = 0 ; 
+	ll f = -1;
+	ll sec = -1;
+	ll sm = s; 
 	for(int i = 0 ; i<n ;i++){
-		b[i]--;
-		if(mark[b[i]]>mark[i]) {
-			ok = false;
-			break;
+		if(sm+v[i]>=0){
+			q.push(i);
+			sm+=v[i];
+			if(q.size()>ans){
+				ans = q.size();
+				f = q.front();
+				sec = q.back();
+			}
+		}
+		else{
+			while(q.size()>0 && sm+v[i]<0){
+				sm-=v[q.front()];
+				q.pop();
+			}
+			if(sm+v[i]>=0){
+				q.push(i);
+				sm+=v[i];
+				if(q.size()>ans){
+				ans = q.size();
+				f = q.front();
+				sec = i;
+			}
+			}
+			
 		}
 	}
-	vector<ll> ans(n+1);
-	if(ok){
-		vector<ll> dist(n+1);
-		dist[p[0]] = 0 ; 
-		ll x = 1 ; 
-		for(int i = 1 ;i<n ;i++){
-			dist[p[i]] = x++;
-		}
-		for(int i = n-1 ; i>=0; i--){
-			ans[p[i]] = dist[p[i]] -dist[b[p[i]]];
-		}
-	}
-	if(ok){
-		for(int i  = 0 ;i <n ;i++){
-			cout<<ans[i]<<" ";
-		}
-		cout<<endl;
+	if(f == -1){
+		cout<<-1<<endl;
 	}
 	else{
-		cout<<-1<<endl;
+		cout<<f+1<<" "<<sec+1<<endl;
 	}
 }
 int main(){

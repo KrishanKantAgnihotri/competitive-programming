@@ -103,46 +103,38 @@ int dy[]={0,1,0,-1};
 bool test = true;
 bool file = true;
 void solve(){
-	ll n;
-	cin>>n;
-	vector<ll> b(n+1);
-	scanv(b,n);
-	vector<ll> p(n+1);
-	scanv(p,n);
-	vector<ll> mark(n+1);
-	for(int i = 0 ;i <n ;i++){
-		p[i]--;
-		mark[p[i]] = i;
-	}
-	bool ok = true;
-	for(int i = 0 ; i<n ;i++){
-		b[i]--;
-		if(mark[b[i]]>mark[i]) {
-			ok = false;
-			break;
-		}
-	}
-	vector<ll> ans(n+1);
-	if(ok){
-		vector<ll> dist(n+1);
-		dist[p[0]] = 0 ; 
-		ll x = 1 ; 
-		for(int i = 1 ;i<n ;i++){
-			dist[p[i]] = x++;
-		}
-		for(int i = n-1 ; i>=0; i--){
-			ans[p[i]] = dist[p[i]] -dist[b[p[i]]];
-		}
-	}
-	if(ok){
-		for(int i  = 0 ;i <n ;i++){
-			cout<<ans[i]<<" ";
-		}
-		cout<<endl;
-	}
-	else{
-		cout<<-1<<endl;
-	}
+    ll n;
+    cin>>n;
+    if(n%2 == 0){
+        cout<<0<<endl;
+        return ;
+    }
+    else{
+        string s = to_string(n);
+        ll d = s[0]-'0';
+        if(d%2 == 0){
+            cout<<1<<endl;
+            return ;
+        }
+        ll m = n;
+        bool ok = false;
+        while(m){
+            d = m%10;
+            if(d%2 == 0){
+                ok = true;
+                break;
+            }
+            m/=10;
+
+        }
+        if(ok){
+            cout<<2<<endl;
+        }
+        else
+            cout<<-1<<endl;
+
+    }
+
 }
 int main(){
     if(file)
@@ -152,6 +144,7 @@ int main(){
     if(test)
     cin>>t;
     while(t--){
+
             solve();
 
     }
